@@ -1,7 +1,8 @@
-package com.robinlb99.legalserviceportalapi.core.domain;
+package com.robinlb99.legalserviceportalapi.core.domain.entity;
 
 import com.robinlb99.legalserviceportalapi.common.util.JsonbConverter;
-import com.robinlb99.legalserviceportalapi.core.enums.TipoDocumento;
+import com.robinlb99.legalserviceportalapi.core.domain.enums.TipoDocumento;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;

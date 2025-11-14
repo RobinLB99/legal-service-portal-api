@@ -1,6 +1,7 @@
-package com.robinlb99.legalserviceportalapi.core.domain;
+package com.robinlb99.legalserviceportalapi.core.domain.entity;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -10,8 +11,10 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
 
+import com.robinlb99.legalserviceportalapi.core.domain.valueobject.DatosPersonales;
+
 @Entity
-public class Abogado extends Persona implements Serializable {
+public class Abogado implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -23,6 +26,9 @@ public class Abogado extends Persona implements Serializable {
     @MapsId
     @JoinColumn(name = "id")
     private PerfilUsuario perfil_usuario;
+
+    @Embedded
+    private DatosPersonales datosPersonales;
 
     @Column(nullable = false, length = 100)
     private String especialidad;
@@ -42,12 +48,14 @@ public class Abogado extends Persona implements Serializable {
         String especialidad,
         String licencia
     ) {
-        this.id = perfil_usuario.getId();
-        this.setNombres(nombres);
-        this.setApellidos(apellidos);
-        this.setNumero_cedula(numero_cedula);
-        this.setCorreo_electronico(correo_electronico);
-        this.setNumero_telefono(numero_telefono);
+        this.perfil_usuario = perfil_usuario;
+        this.datosPersonales = new DatosPersonales(
+            nombres,
+            apellidos,
+            numero_cedula,
+            correo_electronico,
+            numero_telefono
+        );
         this.especialidad = especialidad;
         this.licencia = licencia;
     }
@@ -58,6 +66,14 @@ public class Abogado extends Persona implements Serializable {
 
     public void setPerfil_usuario(PerfilUsuario perfil_usuario) {
         this.perfil_usuario = perfil_usuario;
+    }
+
+    public DatosPersonales getDatosPersonales() {
+        return datosPersonales;
+    }
+
+    public void setDatosPersonales(DatosPersonales datosPersonales) {
+        this.datosPersonales = datosPersonales;
     }
 
     public String getEspecialidad() {
@@ -82,7 +98,7 @@ public class Abogado extends Persona implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, numero_cedula);
+        return Objects.hash(id, datosPersonales.getNumero_cedula());
     }
 
     @Override
@@ -93,7 +109,10 @@ public class Abogado extends Persona implements Serializable {
         Abogado other = (Abogado) obj;
         return (
             Objects.equals(id, other.id) &&
-            Objects.equals(numero_cedula, other.numero_cedula)
+            Objects.equals(
+                datosPersonales.getNumero_cedula(),
+                other.datosPersonales.getNumero_cedula()
+            )
         );
     }
 }

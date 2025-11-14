@@ -1,6 +1,5 @@
-package com.robinlb99.legalserviceportalapi.core.domain;
+package com.robinlb99.legalserviceportalapi.core.domain.entity;
 
-import com.robinlb99.legalserviceportalapi.core.enums.TipoRemitente;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -16,6 +15,8 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
+
+import com.robinlb99.legalserviceportalapi.core.domain.enums.TipoRemitente;
 
 @Entity
 public class Mensaje implements Serializable {
@@ -34,6 +35,7 @@ public class Mensaje implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime fecha_envio;
 
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private TipoRemitente remitente;
 

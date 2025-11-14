@@ -1,11 +1,12 @@
-package com.robinlb99.legalserviceportalapi.core.domain;
+package com.robinlb99.legalserviceportalapi.core.domain.entity;
 
-import com.robinlb99.legalserviceportalapi.core.enums.Role;
 import jakarta.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
+
+import com.robinlb99.legalserviceportalapi.core.domain.enums.Role;
 
 @Entity
 public class Usuario implements Serializable {
@@ -36,8 +37,7 @@ public class Usuario implements Serializable {
 
     @OneToOne(
         mappedBy = "usuario",
-        cascade = CascadeType.ALL,
-        orphanRemoval = true
+        cascade = {CascadeType.PERSIST, CascadeType.MERGE}
     )
     private PerfilUsuario perfilUsuario;
 

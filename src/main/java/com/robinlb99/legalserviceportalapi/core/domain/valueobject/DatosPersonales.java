@@ -1,10 +1,10 @@
-package com.robinlb99.legalserviceportalapi.core.domain;
+package com.robinlb99.legalserviceportalapi.core.domain.valueobject;
 
 import jakarta.persistence.Column;
-import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.Embeddable;
 
-@MappedSuperclass
-public abstract class Persona {
+@Embeddable
+public class DatosPersonales {
 
     @Column(nullable = false, length = 100)
     private String nombres;
@@ -20,6 +20,17 @@ public abstract class Persona {
 
     @Column(nullable = false, length = 15)
     private String numero_telefono;
+
+    public DatosPersonales() {
+    }
+
+    public DatosPersonales(String nombres, String apellidos, String numero_cedula, String correo_electronico, String numero_telefono) {
+        this.nombres = nombres;
+        this.apellidos = apellidos;
+        this.numero_cedula = numero_cedula;
+        this.correo_electronico = correo_electronico;
+        this.numero_telefono = numero_telefono;
+    }
 
     public String getNombres() {
         return nombres;

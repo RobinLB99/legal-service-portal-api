@@ -1,6 +1,5 @@
-package com.robinlb99.legalserviceportalapi.core.domain;
+package com.robinlb99.legalserviceportalapi.core.domain.entity;
 
-import com.robinlb99.legalserviceportalapi.core.enums.TipoCliente;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -14,6 +13,8 @@ import jakarta.persistence.OneToOne;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
+
+import com.robinlb99.legalserviceportalapi.core.domain.enums.TipoCliente;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -37,7 +38,6 @@ public class Cliente implements Serializable {
     public Cliente() {}
 
     public Cliente(PerfilUsuario perfil_usuario, TipoCliente tipo_cliente) {
-        this.id = perfil_usuario.getId();
         this.perfil_usuario = perfil_usuario;
         this.tipo_cliente = tipo_cliente;
     }

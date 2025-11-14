@@ -1,7 +1,5 @@
-package com.robinlb99.legalserviceportalapi.core.domain;
+package com.robinlb99.legalserviceportalapi.core.domain.entity;
 
-import com.robinlb99.legalserviceportalapi.core.enums.EstadoCaso;
-import com.robinlb99.legalserviceportalapi.core.enums.TipoCaso;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -17,6 +15,9 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
+
+import com.robinlb99.legalserviceportalapi.core.domain.enums.EstadoCaso;
+import com.robinlb99.legalserviceportalapi.core.domain.enums.TipoCaso;
 
 @Entity
 public class Caso implements Serializable {

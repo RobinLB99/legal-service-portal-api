@@ -1,30 +1,19 @@
-package com.robinlb99.legalserviceportalapi.core.domain;
+package com.robinlb99.legalserviceportalapi.core.domain.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.MapsId;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.io.Serial;
-import java.io.Serializable;
 import java.util.Objects;
+
+import com.robinlb99.legalserviceportalapi.core.domain.enums.TipoCliente;
 
 @Entity
 @Table(name = "cliente_juridico")
-public class CJuridico implements Serializable {
+public class CJuridico extends Cliente {
 
-	@Serial
+    @Serial
     private static final long serialVersionUID = 1L;
-
-	@Id
-    private Long id;
-
-    @OneToOne
-    @MapsId
-    @JoinColumn(name = "id")
-    private Cliente cliente;
 
     @Column(nullable = false, length = 100)
     private String razon_social;
@@ -47,7 +36,7 @@ public class CJuridico implements Serializable {
     public CJuridico() {}
 
     public CJuridico(
-        Cliente cliente,
+        PerfilUsuario perfil_usuario,
         String razon_social,
         String ruc,
         String representante_legal,
@@ -55,21 +44,13 @@ public class CJuridico implements Serializable {
         String telefono_institucional,
         String direccion_institucional
     ) {
-        this.id = cliente.getId();
+        super(perfil_usuario, TipoCliente.JURIDICO);
         this.razon_social = razon_social;
         this.ruc = ruc;
         this.representante_legal = representante_legal;
         this.correo_institucional = correo_institucional;
         this.telefono_institucional = telefono_institucional;
         this.direccion_institucional = direccion_institucional;
-    }
-
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
     }
 
     public String getRazon_social() {
@@ -120,13 +101,9 @@ public class CJuridico implements Serializable {
         this.direccion_institucional = direccion_institucional;
     }
 
-    public Long getId() {
-        return id;
-    }
-
     @Override
     public int hashCode() {
-        return Objects.hash(id, ruc);
+        return Objects.hash(getId(), ruc);
     }
 
     @Override
@@ -135,6 +112,9 @@ public class CJuridico implements Serializable {
         if (obj == null) return false;
         if (getClass() != obj.getClass()) return false;
         CJuridico other = (CJuridico) obj;
-        return Objects.equals(id, other.id) && Objects.equals(ruc, other.ruc);
+        return (
+            Objects.equals(getId(), other.getId()) &&
+            Objects.equals(ruc, other.ruc)
+        );
     }
 }

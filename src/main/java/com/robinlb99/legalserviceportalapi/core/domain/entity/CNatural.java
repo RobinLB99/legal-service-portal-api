@@ -1,37 +1,31 @@
-package com.robinlb99.legalserviceportalapi.core.domain;
+package com.robinlb99.legalserviceportalapi.core.domain.entity;
 
-import com.robinlb99.legalserviceportalapi.core.enums.EstadoCivil;
-import com.robinlb99.legalserviceportalapi.core.enums.Genero;
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.MapsId;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import java.io.Serial;
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
+import com.robinlb99.legalserviceportalapi.core.domain.enums.EstadoCivil;
+import com.robinlb99.legalserviceportalapi.core.domain.enums.Genero;
+import com.robinlb99.legalserviceportalapi.core.domain.enums.TipoCliente;
+import com.robinlb99.legalserviceportalapi.core.domain.valueobject.DatosPersonales;
+
 @Entity
 @Table(name = "cliente_natural")
-public class CNatural extends Persona implements Serializable {
+public class CNatural extends Cliente {
 
-	@Serial
+    @Serial
     private static final long serialVersionUID = 1L;
 
-	@Id
-    private Long id;
-
-    @OneToOne
-    @MapsId
-    @JoinColumn(name = "id")
-    private Cliente cliente;
+    @Embedded
+    private DatosPersonales datosPersonales;
 
     @Column(nullable = false)
     @Temporal(TemporalType.DATE)
@@ -51,35 +45,37 @@ public class CNatural extends Persona implements Serializable {
     public CNatural() {}
 
     public CNatural(
-        Cliente cliente,
+        PerfilUsuario perfil_usuario,
         String nombres,
         String apellidos,
         String numero_cedula,
+        String correo_electronico,
+        String numero_telefono,
         LocalDate fecha_nacimiento,
         Genero genero,
         EstadoCivil estado_civil,
-        String correo_electronico,
-        String numero_telefono,
         String direccion_domicilio
     ) {
-        this.id = cliente.getId();
-        this.setNombres(nombres);
-        this.setApellidos(apellidos);
-        this.setNumero_cedula(numero_cedula);
-        this.setCorreo_electronico(correo_electronico);
-        this.setNumero_telefono(numero_telefono);
+        super(perfil_usuario, TipoCliente.NATURAL);
+        this.datosPersonales = new DatosPersonales(
+            nombres,
+            apellidos,
+            numero_cedula,
+            correo_electronico,
+            numero_telefono
+        );
         this.fecha_nacimiento = fecha_nacimiento;
         this.genero = genero;
         this.estado_civil = estado_civil;
         this.direccion_domicilio = direccion_domicilio;
     }
 
-    public Cliente getCliente() {
-        return cliente;
+    public DatosPersonales getDatosPersonales() {
+        return datosPersonales;
     }
 
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
+    public void setDatosPersonales(DatosPersonales datosPersonales) {
+        this.datosPersonales = datosPersonales;
     }
 
     public LocalDate getFecha_nacimiento() {
@@ -114,13 +110,9 @@ public class CNatural extends Persona implements Serializable {
         this.direccion_domicilio = direccion_domicilio;
     }
 
-    public Long getId() {
-        return id;
-    }
-
     @Override
     public int hashCode() {
-        return Objects.hash(id, numero_cedula);
+        return Objects.hash(getId(), datosPersonales.getNumero_cedula());
     }
 
     @Override
@@ -130,8 +122,11 @@ public class CNatural extends Persona implements Serializable {
         if (getClass() != obj.getClass()) return false;
         CNatural other = (CNatural) obj;
         return (
-            Objects.equals(id, other.id) &&
-            Objects.equals(numero_cedula, other.numero_cedula)
+            Objects.equals(getId(), other.getId()) &&
+            Objects.equals(
+                datosPersonales.getNumero_cedula(),
+                other.datosPersonales.getNumero_cedula()
+            )
         );
     }
 }
