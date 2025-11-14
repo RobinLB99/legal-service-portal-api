@@ -32,7 +32,7 @@ public class PerfilUsuario implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private TipoPerfil tipo_perfil;
 
-	@OneToOne(mappedBy = "id")
+	@OneToOne
 	@JoinColumn(name = "id_usuario", unique = true, nullable = false)
 	private Usuario usuario;
 

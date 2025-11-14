@@ -2,21 +2,22 @@ package com.robinlb99.legalserviceportalapi.core.domain;
 
 import com.robinlb99.legalserviceportalapi.core.enums.Role;
 import jakarta.persistence.*;
-
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
 public class Usuario implements Serializable {
-    
-	private static final long serialVersionUID = 1L;
 
-	@Id
+    @Serial
+    private static final long serialVersionUID = 1L;
+
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true,  nullable = false)
+    @Column(unique = true, nullable = false)
     private String username;
 
     @Column(nullable = false)
@@ -33,10 +34,23 @@ public class Usuario implements Serializable {
     @Column(nullable = false)
     private boolean activo;
 
-    public Usuario() {
-    }
+    @OneToOne(
+        mappedBy = "usuario",
+        cascade = CascadeType.ALL,
+        orphanRemoval = true
+    )
+    private PerfilUsuario perfilUsuario;
 
-    public Usuario(Long id, String username, String password_hash, Role rol, LocalDateTime fecha_registro, boolean activo) {
+    public Usuario() {}
+
+    public Usuario(
+        Long id,
+        String username,
+        String password_hash,
+        Role rol,
+        LocalDateTime fecha_registro,
+        boolean activo
+    ) {
         this.id = id;
         this.username = username;
         this.password_hash = password_hash;
@@ -93,16 +107,26 @@ public class Usuario implements Serializable {
         this.activo = activo;
     }
 
+    public PerfilUsuario getPerfilUsuario() {
+        return perfilUsuario;
+    }
+
+    public void setPerfilUsuario(PerfilUsuario perfilUsuario) {
+        this.perfilUsuario = perfilUsuario;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Usuario user = (Usuario) o;
-        return Objects.equals(id, user.id) && Objects.equals(username, user.username);
+        return (
+            Objects.equals(id, user.id) &&
+            Objects.equals(username, user.username)
+        );
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(id, username);
     }
-
 }
