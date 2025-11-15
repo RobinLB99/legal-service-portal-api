@@ -19,17 +19,17 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UsuarioServiceImpl implements IUsuarioService {
 
-    private final PasswordService passwordService;
-    private final UsuarioMapper mapper;
+    private final UsuarioMapper usuarioMapper;
+    private PasswordService passwordService;
     private UsuarioRepository repository;
 
-    private UsuarioServiceImpl(
+    public UsuarioServiceImpl(
         PasswordService passwordService,
-        UsuarioMapper mapper,
+        UsuarioMapper usuarioMapper,
         UsuarioRepository repository
     ) {
         this.passwordService = passwordService;
-        this.mapper = mapper;
+        this.usuarioMapper = usuarioMapper;
         this.repository = repository;
     }
 
@@ -43,7 +43,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
             ? Role.ADMIN
             : Role.USUARIO;
 
-        Usuario usuario = mapper.toEntity(usuarioRequest);
+        Usuario usuario = usuarioMapper.toEntity(usuarioRequest);
         usuario.setPassword_hash(passwordHashed);
         usuario.setActivo(true);
         usuario.setFecha_registro(LocalDateTime.now());
@@ -102,7 +102,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
     @Override
     @Transactional
     public void desactivarUsuarioPorUsername(String username) {
-        if (repository.existByUsername(username)) {
+        if (repository.existsUsuarioByUsername(username)) {
             throw new UsuarioNotFoundException(
                 "El usuario '" + username + "' no existe."
             );
@@ -124,7 +124,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
     @Override
     @Transactional
     public void activarUsuarioPorUsername(String username) {
-        if (repository.existByUsername(username)) {
+        if (repository.existsUsuarioByUsername(username)) {
             throw new UsuarioNotFoundException(
                 "El usuario '" + username + "' no existe."
             );
