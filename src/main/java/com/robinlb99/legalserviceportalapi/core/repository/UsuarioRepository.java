@@ -34,5 +34,5 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     @Query("UPDATE Usuario u SET u.activo = TRUE WHERE u.username = :username")
     public void enableUserByUsername(String username);
 
-    public boolean existByUsername(String username);
+    public boolean existsUsuarioByUsername(String username);
 }
