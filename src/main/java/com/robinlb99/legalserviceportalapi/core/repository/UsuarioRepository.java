@@ -1,6 +1,6 @@
 package com.robinlb99.legalserviceportalapi.core.repository;
 
-import com.robinlb99.legalserviceportalapi.core.domain.entity.Usuario;
+import com.robinlb99.legalserviceportalapi.core.model.entity.Usuario;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

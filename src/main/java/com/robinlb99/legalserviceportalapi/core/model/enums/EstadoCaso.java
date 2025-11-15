@@ -1,0 +1,7 @@
+package com.robinlb99.legalserviceportalapi.core.model.enums;
+
+public enum EstadoCaso {
+	ACTIVO,
+	REVISION,
+	CERRADO
+}
