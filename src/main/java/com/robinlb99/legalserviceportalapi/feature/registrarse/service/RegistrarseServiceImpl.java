@@ -1,8 +1,8 @@
 package com.robinlb99.legalserviceportalapi.feature.registrarse.service;
 
-import com.robinlb99.legalserviceportalapi.core.model.entity.CNatural;
+import com.robinlb99.legalserviceportalapi.core.model.entity.PersonaNatural;
 import com.robinlb99.legalserviceportalapi.core.model.entity.Usuario;
-import com.robinlb99.legalserviceportalapi.core.service.ClienteNaturalServiceImpl;
+import com.robinlb99.legalserviceportalapi.core.service.PersonaNaturalServiceImpl;
 import com.robinlb99.legalserviceportalapi.core.service.UsuarioSerivceImpl;
 import com.robinlb99.legalserviceportalapi.feature.registrarse.mapper.RegistrarseClienteNaturalMapper;
 import com.robinlb99.legalserviceportalapi.feature.registrarse.mapper.RegistrarseUsuarioMapper;
@@ -21,9 +21,9 @@ public class RegistrarseServiceImpl implements IRegistrarseService {
     private final RegistrarseUsuarioMapper usuarioMapper;
     private final RegistrarseClienteNaturalMapper clienteNaturalMapper;
     private final UsuarioSerivceImpl usuarioSerivce;
-    private final ClienteNaturalServiceImpl clienteNaturalService;
+    private final PersonaNaturalServiceImpl clienteNaturalService;
 
-    public RegistrarseServiceImpl(RegistrarseUsuarioMapper usuarioMapper, RegistrarseClienteNaturalMapper clienteNaturalMapper, UsuarioSerivceImpl usuarioSerivce, ClienteNaturalServiceImpl clienteNaturalService) {
+    public RegistrarseServiceImpl(RegistrarseUsuarioMapper usuarioMapper, RegistrarseClienteNaturalMapper clienteNaturalMapper, UsuarioSerivceImpl usuarioSerivce, PersonaNaturalServiceImpl clienteNaturalService) {
         this.usuarioMapper = usuarioMapper;
         this.clienteNaturalMapper = clienteNaturalMapper;
         this.usuarioSerivce = usuarioSerivce;
@@ -38,9 +38,9 @@ public class RegistrarseServiceImpl implements IRegistrarseService {
         usuario = usuarioSerivce.crearUsuario(usuario);
 
 //        log.info("Registro de cliente iniciado");
-        CNatural clienteNatural = clienteNaturalMapper.cNaturalDtoToCNaturalEntity(datosCliente);
+        PersonaNatural clienteNatural = clienteNaturalMapper.cNaturalDtoToCNaturalEntity(datosCliente);
         clienteNatural.setUsuario(usuario);
-        clienteNatural = clienteNaturalService.crearClienteNatural(clienteNatural);
+        clienteNatural = clienteNaturalService.crearPersonaNatural(clienteNatural);
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)

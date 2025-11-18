@@ -18,8 +18,8 @@ import com.robinlb99.legalserviceportalapi.core.model.enums.TipoCliente;
 import com.robinlb99.legalserviceportalapi.core.model.valueobject.DatosPersonales;
 
 @Entity
-@Table(name = "cliente_natural")
-public class CNatural extends Cliente {
+@Table(name = "persona_natural")
+public class PersonaNatural extends Cliente {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -42,9 +42,9 @@ public class CNatural extends Cliente {
     @Column(nullable = false, length = 100)
     private String direccion_domicilio;
 
-    public CNatural() {}
+    public PersonaNatural() {}
 
-    public CNatural(
+    public PersonaNatural(
         Usuario usuario,
         String nombres,
         String apellidos,
@@ -120,7 +120,7 @@ public class CNatural extends Cliente {
         if (this == obj) return true;
         if (obj == null) return false;
         if (getClass() != obj.getClass()) return false;
-        CNatural other = (CNatural) obj;
+        PersonaNatural other = (PersonaNatural) obj;
         return (
             Objects.equals(getId(), other.getId()) &&
             Objects.equals(

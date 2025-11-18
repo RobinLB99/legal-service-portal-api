@@ -1,6 +1,6 @@
 package com.robinlb99.legalserviceportalapi.feature.registrarse.mapper;
 
-import com.robinlb99.legalserviceportalapi.core.model.entity.CNatural;
+import com.robinlb99.legalserviceportalapi.core.model.entity.PersonaNatural;
 import com.robinlb99.legalserviceportalapi.core.model.enums.EstadoCivil;
 import com.robinlb99.legalserviceportalapi.core.model.enums.Genero;
 import com.robinlb99.legalserviceportalapi.core.model.enums.TipoCliente;
@@ -15,7 +15,7 @@ import java.time.LocalDate;
 
 @Component
 public class RegistrarseClienteNaturalMapper {
-    public CNatural cNaturalDtoToCNaturalEntity(DatosClienteNaturalRequestDTO datosCliente) {
+    public PersonaNatural cNaturalDtoToCNaturalEntity(DatosClienteNaturalRequestDTO datosCliente) {
         DatosPersonales datosPersonales = new DatosPersonales();
 
         Genero genero = switch (datosCliente.genero()) {
@@ -34,7 +34,7 @@ public class RegistrarseClienteNaturalMapper {
 
         LocalDate fechaNacimiento = LocalDate.parse(datosCliente.fechaNacimiento());
 
-        CNatural clienteNatural = new CNatural();
+        PersonaNatural clienteNatural = new PersonaNatural();
         clienteNatural.setDatosPersonales(datosPersonales);
         clienteNatural.getDatosPersonales().setNombres(datosCliente.nombres());
         clienteNatural.getDatosPersonales().setApellidos(datosCliente.apellidos());
@@ -49,7 +49,7 @@ public class RegistrarseClienteNaturalMapper {
         return clienteNatural;
     }
 
-    public DatosClienteNaturalResponseDTO entityToDatosClienteNaturalResponseDTO(CNatural clienteNatural) {
+    public DatosClienteNaturalResponseDTO entityToDatosClienteNaturalResponseDTO(PersonaNatural clienteNatural) {
         return new DatosClienteNaturalResponseDTO(
                 clienteNatural.getId(),
                 clienteNatural.getUsuario().getUsername(),

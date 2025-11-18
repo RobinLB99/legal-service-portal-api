@@ -9,8 +9,8 @@ import java.util.Objects;
 import com.robinlb99.legalserviceportalapi.core.model.enums.TipoCliente;
 
 @Entity
-@Table(name = "cliente_juridico")
-public class CJuridico extends Cliente {
+@Table(name = "empresa")
+public class Empresa extends Cliente {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -33,9 +33,9 @@ public class CJuridico extends Cliente {
     @Column(nullable = false, length = 100)
     private String direccion_institucional;
 
-    public CJuridico() {}
+    public Empresa() {}
 
-    public CJuridico(
+    public Empresa(
         Usuario usuario,
         String razon_social,
         String ruc,
@@ -111,7 +111,7 @@ public class CJuridico extends Cliente {
         if (this == obj) return true;
         if (obj == null) return false;
         if (getClass() != obj.getClass()) return false;
-        CJuridico other = (CJuridico) obj;
+        Empresa other = (Empresa) obj;
         return (
             Objects.equals(getId(), other.getId()) &&
             Objects.equals(ruc, other.ruc)
