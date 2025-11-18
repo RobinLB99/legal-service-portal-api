@@ -7,15 +7,15 @@ import com.robinlb99.legalserviceportalapi.core.model.enums.TipoCliente;
 import com.robinlb99.legalserviceportalapi.core.model.exception.IllegalEstadoCivilException;
 import com.robinlb99.legalserviceportalapi.core.model.exception.IllegalGeneroException;
 import com.robinlb99.legalserviceportalapi.core.model.valueobject.DatosPersonales;
-import com.robinlb99.legalserviceportalapi.feature.registrarse.dto.DatosClienteNaturalRequestDTO;
-import com.robinlb99.legalserviceportalapi.feature.registrarse.dto.DatosClienteNaturalResponseDTO;
+import com.robinlb99.legalserviceportalapi.feature.registrarse.dto.DatosPersonaNaturalRequestDTO;
+import com.robinlb99.legalserviceportalapi.feature.registrarse.dto.DatosPersonaNaturalResponseDTO;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 
 @Component
-public class RegistrarseClienteNaturalMapper {
-    public PersonaNatural cNaturalDtoToCNaturalEntity(DatosClienteNaturalRequestDTO datosCliente) {
+public class RegistrarsePersonaNaturalMapper {
+    public PersonaNatural cNaturalDtoToCNaturalEntity(DatosPersonaNaturalRequestDTO datosCliente) {
         DatosPersonales datosPersonales = new DatosPersonales();
 
         Genero genero = switch (datosCliente.genero()) {
@@ -49,8 +49,8 @@ public class RegistrarseClienteNaturalMapper {
         return clienteNatural;
     }
 
-    public DatosClienteNaturalResponseDTO entityToDatosClienteNaturalResponseDTO(PersonaNatural clienteNatural) {
-        return new DatosClienteNaturalResponseDTO(
+    public DatosPersonaNaturalResponseDTO entityToDatosClienteNaturalResponseDTO(PersonaNatural clienteNatural) {
+        return new DatosPersonaNaturalResponseDTO(
                 clienteNatural.getId(),
                 clienteNatural.getUsuario().getUsername(),
                 clienteNatural.getDatosPersonales().getNombres(),

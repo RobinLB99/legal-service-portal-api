@@ -4,7 +4,7 @@ import com.robinlb99.legalserviceportalapi.core.model.entity.PersonaNatural;
 import com.robinlb99.legalserviceportalapi.core.model.entity.Usuario;
 import com.robinlb99.legalserviceportalapi.core.service.PersonaNaturalServiceImpl;
 import com.robinlb99.legalserviceportalapi.core.service.UsuarioSerivceImpl;
-import com.robinlb99.legalserviceportalapi.feature.registrarse.mapper.RegistrarseClienteNaturalMapper;
+import com.robinlb99.legalserviceportalapi.feature.registrarse.mapper.RegistrarsePersonaNaturalMapper;
 import com.robinlb99.legalserviceportalapi.feature.registrarse.mapper.RegistrarseUsuarioMapper;
 import com.robinlb99.legalserviceportalapi.feature.registrarse.dto.*;
 import com.robinlb99.legalserviceportalapi.feature.registrarse.service.contract.IRegistrarseService;
@@ -19,11 +19,11 @@ import org.springframework.transaction.annotation.Transactional;
 public class RegistrarseServiceImpl implements IRegistrarseService {
 
     private final RegistrarseUsuarioMapper usuarioMapper;
-    private final RegistrarseClienteNaturalMapper clienteNaturalMapper;
+    private final RegistrarsePersonaNaturalMapper clienteNaturalMapper;
     private final UsuarioSerivceImpl usuarioSerivce;
     private final PersonaNaturalServiceImpl clienteNaturalService;
 
-    public RegistrarseServiceImpl(RegistrarseUsuarioMapper usuarioMapper, RegistrarseClienteNaturalMapper clienteNaturalMapper, UsuarioSerivceImpl usuarioSerivce, PersonaNaturalServiceImpl clienteNaturalService) {
+    public RegistrarseServiceImpl(RegistrarseUsuarioMapper usuarioMapper, RegistrarsePersonaNaturalMapper clienteNaturalMapper, UsuarioSerivceImpl usuarioSerivce, PersonaNaturalServiceImpl clienteNaturalService) {
         this.usuarioMapper = usuarioMapper;
         this.clienteNaturalMapper = clienteNaturalMapper;
         this.usuarioSerivce = usuarioSerivce;
@@ -32,7 +32,7 @@ public class RegistrarseServiceImpl implements IRegistrarseService {
 
     @Override
     @Transactional
-    public ResponseEntity<DatosClienteNaturalResponseDTO> registrarseClienteNatural(DatosClienteNaturalRequestDTO datosCliente) {
+    public ResponseEntity<DatosPersonaNaturalResponseDTO> registrarsePersonaNatural(DatosPersonaNaturalRequestDTO datosCliente) {
 //        log.info("Registro de usuario iniciado");
         Usuario usuario = usuarioMapper.cNaturalDtoToUsuarioEntity(datosCliente);
         usuario = usuarioSerivce.crearUsuario(usuario);

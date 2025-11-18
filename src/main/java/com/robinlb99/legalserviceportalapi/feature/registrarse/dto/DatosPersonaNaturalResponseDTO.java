@@ -1,6 +1,6 @@
 package com.robinlb99.legalserviceportalapi.feature.registrarse.dto;
 
-public record DatosClienteNaturalResponseDTO(
+public record DatosPersonaNaturalResponseDTO(
         Long id,
         String username,
         String nombres,

@@ -1,10 +1,9 @@
 package com.robinlb99.legalserviceportalapi.feature.registrarse.dto;
 
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
 
-public record DatosClienteNaturalRequestDTO(
+public record DatosPersonaNaturalRequestDTO(
         @NotBlank(message = "Username es obligatorio.")
         String username,
 
