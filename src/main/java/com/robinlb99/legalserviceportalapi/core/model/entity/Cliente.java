@@ -18,7 +18,7 @@ import com.robinlb99.legalserviceportalapi.core.model.enums.TipoCliente;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Cliente implements Serializable {
+public abstract class Cliente implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -29,7 +29,7 @@ public class Cliente implements Serializable {
     @OneToOne
     @MapsId
     @JoinColumn(name = "id")
-    private PerfilUsuario perfil_usuario;
+    private Usuario usuario;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
@@ -37,17 +37,17 @@ public class Cliente implements Serializable {
 
     public Cliente() {}
 
-    public Cliente(PerfilUsuario perfil_usuario, TipoCliente tipo_cliente) {
-        this.perfil_usuario = perfil_usuario;
+    public Cliente(Usuario usuario, TipoCliente tipo_cliente) {
+        this.usuario = usuario;
         this.tipo_cliente = tipo_cliente;
     }
 
-    public PerfilUsuario getPerfil_usuario() {
-        return perfil_usuario;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setPerfil_usuario(PerfilUsuario perfil_usuario) {
-        this.perfil_usuario = perfil_usuario;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     public TipoCliente getTipo_cliente() {

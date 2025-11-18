@@ -36,7 +36,7 @@ public class CJuridico extends Cliente {
     public CJuridico() {}
 
     public CJuridico(
-        PerfilUsuario perfil_usuario,
+        Usuario usuario,
         String razon_social,
         String ruc,
         String representante_legal,
@@ -44,7 +44,7 @@ public class CJuridico extends Cliente {
         String telefono_institucional,
         String direccion_institucional
     ) {
-        super(perfil_usuario, TipoCliente.JURIDICO);
+        super(usuario, TipoCliente.JURIDICO);
         this.razon_social = razon_social;
         this.ruc = ruc;
         this.representante_legal = representante_legal;

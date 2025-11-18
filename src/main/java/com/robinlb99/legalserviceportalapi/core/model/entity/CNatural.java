@@ -45,7 +45,7 @@ public class CNatural extends Cliente {
     public CNatural() {}
 
     public CNatural(
-        PerfilUsuario perfil_usuario,
+        Usuario usuario,
         String nombres,
         String apellidos,
         String numero_cedula,
@@ -56,7 +56,7 @@ public class CNatural extends Cliente {
         EstadoCivil estado_civil,
         String direccion_domicilio
     ) {
-        super(perfil_usuario, TipoCliente.NATURAL);
+        super(usuario, TipoCliente.NATURAL);
         this.datosPersonales = new DatosPersonales(
             nombres,
             apellidos,

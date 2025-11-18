@@ -25,7 +25,7 @@ public class Abogado implements Serializable {
     @OneToOne
     @MapsId
     @JoinColumn(name = "id")
-    private PerfilUsuario perfil_usuario;
+    private Usuario usuario;
 
     @Embedded
     private DatosPersonales datosPersonales;
@@ -39,33 +39,23 @@ public class Abogado implements Serializable {
     public Abogado() {}
 
     public Abogado(
-        PerfilUsuario perfil_usuario,
-        String nombres,
-        String apellidos,
-        String numero_cedula,
-        String correo_electronico,
-        String numero_telefono,
+        Usuario usuario,
+        DatosPersonales datosPersonales,
         String especialidad,
         String licencia
     ) {
-        this.perfil_usuario = perfil_usuario;
-        this.datosPersonales = new DatosPersonales(
-            nombres,
-            apellidos,
-            numero_cedula,
-            correo_electronico,
-            numero_telefono
-        );
+        this.usuario = usuario;
+        this.datosPersonales = datosPersonales;
         this.especialidad = especialidad;
         this.licencia = licencia;
     }
 
-    public PerfilUsuario getPerfil_usuario() {
-        return perfil_usuario;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setPerfil_usuario(PerfilUsuario perfil_usuario) {
-        this.perfil_usuario = perfil_usuario;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     public DatosPersonales getDatosPersonales() {

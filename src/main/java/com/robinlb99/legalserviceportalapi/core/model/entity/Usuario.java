@@ -35,12 +35,6 @@ public class Usuario implements Serializable {
     @Column(nullable = false)
     private boolean activo;
 
-    @OneToOne(
-        mappedBy = "usuario",
-        cascade = {CascadeType.PERSIST, CascadeType.MERGE}
-    )
-    private PerfilUsuario perfilUsuario;
-
     public Usuario() {}
 
     public Usuario(
@@ -107,13 +101,7 @@ public class Usuario implements Serializable {
         this.activo = activo;
     }
 
-    public PerfilUsuario getPerfilUsuario() {
-        return perfilUsuario;
-    }
 
-    public void setPerfilUsuario(PerfilUsuario perfilUsuario) {
-        this.perfilUsuario = perfilUsuario;
-    }
 
     @Override
     public boolean equals(Object o) {
