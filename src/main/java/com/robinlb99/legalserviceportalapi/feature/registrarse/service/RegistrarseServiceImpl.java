@@ -8,11 +8,13 @@ import com.robinlb99.legalserviceportalapi.feature.registrarse.mapper.Registrars
 import com.robinlb99.legalserviceportalapi.feature.registrarse.mapper.RegistrarseUsuarioMapper;
 import com.robinlb99.legalserviceportalapi.feature.registrarse.dto.*;
 import com.robinlb99.legalserviceportalapi.feature.registrarse.service.contract.IRegistrarseService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @Service
 public class RegistrarseServiceImpl implements IRegistrarseService {
 
@@ -31,9 +33,11 @@ public class RegistrarseServiceImpl implements IRegistrarseService {
     @Override
     @Transactional
     public ResponseEntity<DatosClienteNaturalResponseDTO> registrarseClienteNatural(DatosClienteNaturalRequestDTO datosCliente) {
+//        log.info("Registro de usuario iniciado");
         Usuario usuario = usuarioMapper.cNaturalDtoToUsuarioEntity(datosCliente);
         usuario = usuarioSerivce.crearUsuario(usuario);
 
+//        log.info("Registro de cliente iniciado");
         CNatural clienteNatural = clienteNaturalMapper.cNaturalDtoToCNaturalEntity(datosCliente);
         clienteNatural.setUsuario(usuario);
         clienteNatural = clienteNaturalService.crearClienteNatural(clienteNatural);
