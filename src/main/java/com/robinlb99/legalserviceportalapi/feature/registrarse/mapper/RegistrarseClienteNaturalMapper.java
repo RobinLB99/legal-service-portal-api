@@ -6,6 +6,7 @@ import com.robinlb99.legalserviceportalapi.core.model.enums.Genero;
 import com.robinlb99.legalserviceportalapi.core.model.enums.TipoCliente;
 import com.robinlb99.legalserviceportalapi.core.model.exception.IllegalEstadoCivilException;
 import com.robinlb99.legalserviceportalapi.core.model.exception.IllegalGeneroException;
+import com.robinlb99.legalserviceportalapi.core.model.valueobject.DatosPersonales;
 import com.robinlb99.legalserviceportalapi.feature.registrarse.dto.DatosClienteNaturalRequestDTO;
 import com.robinlb99.legalserviceportalapi.feature.registrarse.dto.DatosClienteNaturalResponseDTO;
 import org.springframework.stereotype.Component;
@@ -15,6 +16,8 @@ import java.time.LocalDate;
 @Component
 public class RegistrarseClienteNaturalMapper {
     public CNatural cNaturalDtoToCNaturalEntity(DatosClienteNaturalRequestDTO datosCliente) {
+        DatosPersonales datosPersonales = new DatosPersonales();
+
         Genero genero = switch (datosCliente.genero()) {
             case "MASCULINO" -> Genero.MASCULINO;
             case "FEMENINO" -> Genero.FEMENINO;
@@ -32,6 +35,7 @@ public class RegistrarseClienteNaturalMapper {
         LocalDate fechaNacimiento = LocalDate.parse(datosCliente.fechaNacimiento());
 
         CNatural clienteNatural = new CNatural();
+        clienteNatural.setDatosPersonales(datosPersonales);
         clienteNatural.getDatosPersonales().setNombres(datosCliente.nombres());
         clienteNatural.getDatosPersonales().setApellidos(datosCliente.apellidos());
         clienteNatural.getDatosPersonales().setNumero_cedula(datosCliente.numeroCedula());

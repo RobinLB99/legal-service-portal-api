@@ -24,7 +24,7 @@ public record DatosClienteNaturalRequestDTO(
         @NotBlank(message = "El correo electrónico es obligatorio.")
         String correoElectronico,
 
-        @Max(value = 13, message = "El número de teléfono debe tener un maximo de 12 dígitos")
+//        @Max(value = 14, message = "El número de teléfono debe tener un maximo de 12 dígitos")
         @NotBlank(message = "Número de teléfono es obligatorio.")
         String numeroTelefono,
 

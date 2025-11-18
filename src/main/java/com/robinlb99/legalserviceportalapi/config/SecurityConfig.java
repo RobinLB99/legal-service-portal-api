@@ -33,7 +33,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(auth -> auth
-                    .requestMatchers("/api/registrarse").permitAll()
+                    .requestMatchers("/api/registrarse/**").permitAll()
                     .anyRequest().authenticated()
             )
             .httpBasic(Customizer.withDefaults())

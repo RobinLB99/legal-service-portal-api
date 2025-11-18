@@ -19,7 +19,7 @@ public class RegistroController {
         this.registrarseService = registrarseService;
     }
 
-    @PostMapping("/persona-natural")
+    @PostMapping("/cliente-natural")
     public ResponseEntity<DatosClienteNaturalResponseDTO> registrarseClienteNatural(
         @Valid @RequestBody DatosClienteNaturalRequestDTO dto
     ) {
