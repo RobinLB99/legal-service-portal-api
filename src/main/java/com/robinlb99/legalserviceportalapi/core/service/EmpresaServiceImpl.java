@@ -11,7 +11,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
 /**
  * Implementación del servicio de gestión de empresas.
  * Proporciona la lógica de negocio para las operaciones con empresas.
@@ -53,11 +52,12 @@ public class EmpresaServiceImpl implements IEmpresaService {
     @Transactional(readOnly = true)
     public Empresa obtenerPorId(Long id) {
         return empresaRepository
-                .findById(id)
-                .orElseThrow(
-                        () -> new EmpresaNotFoundException(
-                                "Empresa con ID '" + id + "' no encontrada")
-                );
+            .findById(id)
+            .orElseThrow(() ->
+                new EmpresaNotFoundException(
+                    "Empresa con ID '" + id + "' no encontrada"
+                )
+            );
     }
 
     /**
@@ -71,11 +71,12 @@ public class EmpresaServiceImpl implements IEmpresaService {
     @Transactional(readOnly = true)
     public Empresa obtenerPorRuc(String ruc) {
         return empresaRepository
-                .findByRuc(ruc)
-                .orElseThrow(
-                        () -> new EmpresaNotFoundException(
-                                "Empresa con RUC '" + ruc + "' + no encontrada")
-                );
+            .findByRuc(ruc)
+            .orElseThrow(() ->
+                new EmpresaNotFoundException(
+                    "Empresa con RUC '" + ruc + "' + no encontrada"
+                )
+            );
     }
 
     /**
@@ -89,11 +90,10 @@ public class EmpresaServiceImpl implements IEmpresaService {
     @Transactional(readOnly = true)
     public Page<Empresa> obtenerTodosPaginados(int pageNumber, int pageSize) {
         Pageable pageable = PageRequest.of(
-                pageNumber,
-                pageSize,
-                Sort.by("ruc").ascending()
+            pageNumber,
+            pageSize,
+            Sort.by("ruc").ascending()
         );
         return empresaRepository.findAll(pageable);
     }
 }
-

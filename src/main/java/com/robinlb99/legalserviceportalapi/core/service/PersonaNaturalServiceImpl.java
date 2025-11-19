@@ -8,7 +8,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
 /**
  * Implementación del servicio de gestión de personas naturales.
  * Proporciona la lógica de negocio para las operaciones con personas naturales.
@@ -23,7 +22,9 @@ public class PersonaNaturalServiceImpl implements IPersonaNaturalService {
      *
      * @param personaNaturalRepository El repositorio de personas naturales a utilizar.
      */
-    public PersonaNaturalServiceImpl(PersonaNaturalRepository personaNaturalRepository) {
+    public PersonaNaturalServiceImpl(
+        PersonaNaturalRepository personaNaturalRepository
+    ) {
         this.personaNaturalRepository = personaNaturalRepository;
     }
 
@@ -50,12 +51,12 @@ public class PersonaNaturalServiceImpl implements IPersonaNaturalService {
     @Transactional(readOnly = true)
     public PersonaNatural obtenerPersonaNaturalPorId(Long id) {
         return personaNaturalRepository
-                .findById(id)
-                .orElseThrow(() ->
-                        new PersonaNaturalNotFoundException(
-                            "No existe el Cliente con ID '" + id + "'"
+            .findById(id)
+            .orElseThrow(() ->
+                new PersonaNaturalNotFoundException(
+                    "No existe el Cliente con ID '" + id + "'"
                 )
-        );
+            );
     }
 
     /**
@@ -80,4 +81,3 @@ public class PersonaNaturalServiceImpl implements IPersonaNaturalService {
         return null;
     }
 }
-

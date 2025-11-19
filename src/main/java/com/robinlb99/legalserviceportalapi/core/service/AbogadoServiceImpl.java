@@ -6,7 +6,6 @@ import com.robinlb99.legalserviceportalapi.core.service.contract.IAbogadoService
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
-
 /**
  * Implementación del servicio de gestión de abogados.
  * Proporciona la lógica de negocio para las operaciones con abogados.
@@ -69,4 +68,3 @@ public class AbogadoServiceImpl implements IAbogadoService {
         return null;
     }
 }
-

@@ -47,10 +47,13 @@ public class UsuarioServiceImpl implements IUsuarioService {
     @Override
     @Transactional
     public Usuario buscarUsuarioPorId(Long idUsuario) {
-        return usuarioRepository.findById(idUsuario).orElseThrow(
-                () -> new UsuarioNotFoundException("Usuario con ID '" +
-                        idUsuario + "' no encontrado")
-        );
+        return usuarioRepository
+            .findById(idUsuario)
+            .orElseThrow(() ->
+                new UsuarioNotFoundException(
+                    "Usuario con ID '" + idUsuario + "' no encontrado"
+                )
+            );
     }
 
     /**
@@ -72,8 +75,14 @@ public class UsuarioServiceImpl implements IUsuarioService {
      */
     @Override
     @Transactional
-    public void actualizarContrasenaCodificada(Long idUsuario, String nuevaContrasenaCodificada) {
-        usuarioRepository.updatePasswordEncode(idUsuario, nuevaContrasenaCodificada);
+    public void actualizarContrasenaCodificada(
+        Long idUsuario,
+        String nuevaContrasenaCodificada
+    ) {
+        usuarioRepository.updatePasswordEncode(
+            idUsuario,
+            nuevaContrasenaCodificada
+        );
     }
 
     /**
@@ -86,11 +95,13 @@ public class UsuarioServiceImpl implements IUsuarioService {
     @Override
     @Transactional(readOnly = true)
     public Usuario buscarUsuarioPorNombreUsuario(String nombreUsuario) {
-        return usuarioRepository.findByUsername(nombreUsuario).orElseThrow(
-                () -> new UsuarioNotFoundException(
-                        "Usuario '" + nombreUsuario + "' no encontrado"
+        return usuarioRepository
+            .findByUsername(nombreUsuario)
+            .orElseThrow(() ->
+                new UsuarioNotFoundException(
+                    "Usuario '" + nombreUsuario + "' no encontrado"
                 )
-        );
+            );
     }
 
     /**
