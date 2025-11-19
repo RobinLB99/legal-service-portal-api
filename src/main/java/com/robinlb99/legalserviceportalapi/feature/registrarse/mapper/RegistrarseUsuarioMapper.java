@@ -4,6 +4,7 @@ import com.robinlb99.legalserviceportalapi.common.util.PasswordService;
 import com.robinlb99.legalserviceportalapi.core.model.entity.Usuario;
 import com.robinlb99.legalserviceportalapi.core.model.enums.Role;
 import com.robinlb99.legalserviceportalapi.feature.registrarse.dto.DatosAbogadoRequestDTO;
+import com.robinlb99.legalserviceportalapi.feature.registrarse.dto.DatosEmpresaRequestDTO;
 import com.robinlb99.legalserviceportalapi.feature.registrarse.dto.DatosPersonaNaturalRequestDTO;
 import org.springframework.stereotype.Component;
 
@@ -24,6 +25,20 @@ public class RegistrarseUsuarioMapper {
         usuario.setPassword_hash(
                 passwordService.hashPassword(
                         datosPersonaNatural.plain_password()
+                )
+        );
+        usuario.setRol(Role.CLIENTE);
+        usuario.setFecha_registro(LocalDateTime.now());
+        usuario.setActivo(true);
+        return usuario;
+    }
+
+    public Usuario empresaDtoToUsuarioEntity(DatosEmpresaRequestDTO  datosEmpresa) {
+        Usuario usuario = new Usuario();
+        usuario.setUsername(datosEmpresa.username());
+        usuario.setPassword_hash(
+                passwordService.hashPassword(
+                        datosEmpresa.plainPassword()
                 )
         );
         usuario.setRol(Role.CLIENTE);

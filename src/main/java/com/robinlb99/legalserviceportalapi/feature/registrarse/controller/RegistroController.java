@@ -3,6 +3,7 @@ package com.robinlb99.legalserviceportalapi.feature.registrarse.controller;
 import com.robinlb99.legalserviceportalapi.feature.registrarse.dto.*;
 import com.robinlb99.legalserviceportalapi.feature.registrarse.service.RegistrarseServiceImpl;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,19 +24,23 @@ public class RegistroController {
     public ResponseEntity<DatosPersonaNaturalResponseDTO> registrarseClienteNatural(
         @Valid @RequestBody DatosPersonaNaturalRequestDTO dto
     ) {
-        return registrarseService.registrarsePersonaNatural(dto);
+        DatosPersonaNaturalResponseDTO responseDTO =
+            registrarseService.registrarsePersonaNatural(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
     }
 
     @PostMapping("/empresa")
     public ResponseEntity<DatosEmpresaResponseDTO> registrarseEmpresa(
-            @Valid @RequestBody DatosEmpresaRequestDTO dto
+        @Valid @RequestBody DatosEmpresaRequestDTO dto
     ) {
-        return null;
+        DatosEmpresaResponseDTO responseDTO =
+            registrarseService.registrarEmpresa(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
     }
 
-    @PostMapping("/Abogado")
+    @PostMapping("/abogado")
     public ResponseEntity<DatosAbogadoResponseDTO> registrarse(
-            @Valid @RequestBody DatosAbogadoRequestDTO dto
+        @Valid @RequestBody DatosAbogadoRequestDTO dto
     ) {
         return null;
     }
