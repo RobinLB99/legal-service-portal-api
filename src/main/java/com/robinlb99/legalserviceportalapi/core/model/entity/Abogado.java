@@ -40,12 +40,22 @@ public class Abogado implements Serializable {
 
     public Abogado(
         Usuario usuario,
-        DatosPersonales datosPersonales,
+        String nombres,
+        String apellidos,
+        String numero_cedula,
+        String correo_electronico,
+        String numero_telefono,
         String especialidad,
         String licencia
     ) {
         this.usuario = usuario;
-        this.datosPersonales = datosPersonales;
+        this.datosPersonales = new DatosPersonales(
+                nombres,
+                apellidos,
+                numero_cedula,
+                correo_electronico,
+                numero_telefono
+        );
         this.especialidad = especialidad;
         this.licencia = licencia;
     }

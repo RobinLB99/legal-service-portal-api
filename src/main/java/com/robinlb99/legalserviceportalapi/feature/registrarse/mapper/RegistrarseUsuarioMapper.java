@@ -49,8 +49,15 @@ public class RegistrarseUsuarioMapper {
 
     public Usuario abogadoDtoToUsuarioEntity(DatosAbogadoRequestDTO datosAbogado) {
         Usuario usuario = new Usuario();
-        usuario.setUsername(datosAbogado.ussername());
+        usuario.setUsername(datosAbogado.username());
+        usuario.setPassword_hash(
+                passwordService.hashPassword(
+                        datosAbogado.plainPassword()
+                )
+        );
         usuario.setRol(Role.ABOGADO);
+        usuario.setFecha_registro(LocalDateTime.now());
+        usuario.setActivo(true);
         return usuario;
     }
 

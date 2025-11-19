@@ -1,12 +1,15 @@
 package com.robinlb99.legalserviceportalapi.feature.registrarse.service;
 
+import com.robinlb99.legalserviceportalapi.core.model.entity.Abogado;
 import com.robinlb99.legalserviceportalapi.core.model.entity.Empresa;
 import com.robinlb99.legalserviceportalapi.core.model.entity.PersonaNatural;
 import com.robinlb99.legalserviceportalapi.core.model.entity.Usuario;
+import com.robinlb99.legalserviceportalapi.core.service.AbogadoServiceImpl;
 import com.robinlb99.legalserviceportalapi.core.service.EmpresaServiceImpl;
 import com.robinlb99.legalserviceportalapi.core.service.PersonaNaturalServiceImpl;
 import com.robinlb99.legalserviceportalapi.core.service.UsuarioSerivceImpl;
 import com.robinlb99.legalserviceportalapi.feature.registrarse.dto.*;
+import com.robinlb99.legalserviceportalapi.feature.registrarse.mapper.RegistrarseAbogadoMapper;
 import com.robinlb99.legalserviceportalapi.feature.registrarse.mapper.RegistrarseEmpresaMapper;
 import com.robinlb99.legalserviceportalapi.feature.registrarse.mapper.RegistrarsePersonaNaturalMapper;
 import com.robinlb99.legalserviceportalapi.feature.registrarse.mapper.RegistrarseUsuarioMapper;
@@ -22,29 +25,37 @@ public class RegistrarseServiceImpl implements IRegistrarseService {
     private final RegistrarseUsuarioMapper usuarioMapper;
     private final RegistrarsePersonaNaturalMapper clienteNaturalMapper;
     private final RegistrarseEmpresaMapper empresaMapper;
+    private final RegistrarseAbogadoMapper abogadoMapper;
     private final UsuarioSerivceImpl usuarioSerivce;
     private final PersonaNaturalServiceImpl clienteNaturalService;
     private final EmpresaServiceImpl empresaService;
+    private final AbogadoServiceImpl abogadoService;
 
     public RegistrarseServiceImpl(
         RegistrarseUsuarioMapper usuarioMapper,
         RegistrarsePersonaNaturalMapper clienteNaturalMapper,
         RegistrarseEmpresaMapper empresaMapper,
+        RegistrarseAbogadoMapper abogadoMapper,
         UsuarioSerivceImpl usuarioSerivce,
         PersonaNaturalServiceImpl clienteNaturalService,
-        EmpresaServiceImpl empresaService
+        EmpresaServiceImpl empresaService,
+        AbogadoServiceImpl abogadoService
     ) {
         this.usuarioMapper = usuarioMapper;
         this.clienteNaturalMapper = clienteNaturalMapper;
         this.empresaMapper = empresaMapper;
+        this.abogadoMapper = abogadoMapper;
         this.usuarioSerivce = usuarioSerivce;
         this.clienteNaturalService = clienteNaturalService;
         this.empresaService = empresaService;
+        this.abogadoService = abogadoService;
     }
 
     @Override
     @Transactional
-    public DatosPersonaNaturalResponseDTO registrarsePersonaNatural(DatosPersonaNaturalRequestDTO datosCliente) {
+    public DatosPersonaNaturalResponseDTO registrarsePersonaNatural(
+        DatosPersonaNaturalRequestDTO datosCliente
+    ) {
         Usuario usuario = usuarioMapper.cNaturalDtoToUsuarioEntity(
             datosCliente
         );
@@ -57,13 +68,8 @@ public class RegistrarseServiceImpl implements IRegistrarseService {
             clienteNatural
         );
 
-        return new DatosPersonaNaturalResponseDTO(
-                clienteNatural.getId(),
-                clienteNatural.getUsuario().getUsername(),
-                clienteNatural.getDatosPersonales().getNombres(),
-                clienteNatural.getDatosPersonales().getApellidos(),
-                clienteNatural.getGenero().name(),
-                clienteNatural.getDatosPersonales().getCorreo_electronico()
+        return clienteNaturalMapper.entityToDatosClienteNaturalResponseDTO(
+            clienteNatural
         );
     }
 
@@ -79,19 +85,21 @@ public class RegistrarseServiceImpl implements IRegistrarseService {
         empresa.setUsuario(usuario);
         empresa = empresaService.crearEmpresa(empresa);
 
-        return new DatosEmpresaResponseDTO(
-            empresa.getId(),
-            empresa.getUsuario().getUsername(),
-            empresa.getRazon_social(),
-            empresa.getRepresentante_legal()
-        );
+        return empresaMapper.toDto(empresa);
     }
 
     @Override
     @Transactional
     public DatosAbogadoResponseDTO registrarAbogado(
-        DatosAbogadoRequestDTO abogado
+        DatosAbogadoRequestDTO dto
     ) {
-        return null;
+        Usuario usuario = usuarioMapper.abogadoDtoToUsuarioEntity(dto);
+        usuario = usuarioSerivce.crearUsuario(usuario);
+
+        Abogado abogado = abogadoMapper.toEntity(dto);
+        abogado.setUsuario(usuario);
+        abogado = abogadoService.crearAbogado(abogado);
+
+        return abogadoMapper.toDTO(abogado);
     }
 }

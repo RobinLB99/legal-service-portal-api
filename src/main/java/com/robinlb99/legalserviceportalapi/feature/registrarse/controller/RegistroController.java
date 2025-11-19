@@ -42,6 +42,7 @@ public class RegistroController {
     public ResponseEntity<DatosAbogadoResponseDTO> registrarse(
         @Valid @RequestBody DatosAbogadoRequestDTO dto
     ) {
-        return null;
+        DatosAbogadoResponseDTO responseDTO = registrarseService.registrarAbogado(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
     }
 }
