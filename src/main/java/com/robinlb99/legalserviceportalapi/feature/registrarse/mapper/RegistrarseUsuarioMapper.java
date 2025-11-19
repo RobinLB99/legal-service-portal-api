@@ -39,7 +39,7 @@ public class RegistrarseUsuarioMapper {
         Usuario usuario = new Usuario();
         usuario.setUsername(datosPersonaNatural.username());
         usuario.setPassword_hash(
-            passwordService.hashPassword(datosPersonaNatural.plain_password())
+            passwordService.hashPassword(datosPersonaNatural.plainPassword())
         );
         usuario.setRol(Role.CLIENTE);
         usuario.setFecha_registro(LocalDateTime.now());
