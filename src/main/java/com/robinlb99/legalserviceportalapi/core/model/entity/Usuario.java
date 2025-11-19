@@ -1,42 +1,75 @@
 package com.robinlb99.legalserviceportalapi.core.model.entity;
 
+import com.robinlb99.legalserviceportalapi.core.model.enums.Role;
 import jakarta.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-import com.robinlb99.legalserviceportalapi.core.model.enums.Role;
-
+/**
+ * Entidad que representa a un usuario del sistema.
+ */
 @Entity
 public class Usuario implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
 
+    /**
+     * ID del usuario.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    /**
+     * Nombre de usuario único.
+     */
     @Column(unique = true, nullable = false)
     private String username;
 
+    /**
+     * Hash de la contraseña del usuario.
+     */
     @Column(nullable = false)
     private String password_hash;
 
+    /**
+     * Rol del usuario en el sistema.
+     */
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Role rol;
 
+    /**
+     * Fecha y hora de registro del usuario.
+     */
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime fecha_registro;
 
+    /**
+     * Indica si el usuario está activo o no.
+     */
     @Column(nullable = false)
     private boolean activo;
 
+    /**
+     * Constructor por defecto.
+     */
     public Usuario() {}
 
+    /**
+     * Constructor con todos los campos.
+     *
+     * @param id ID del usuario.
+     * @param username Nombre de usuario.
+     * @param password_hash Hash de la contraseña.
+     * @param rol Rol del usuario.
+     * @param fecha_registro Fecha y hora de registro.
+     * @param activo Estado de activación del usuario.
+     */
     public Usuario(
         Long id,
         String username,
@@ -100,8 +133,6 @@ public class Usuario implements Serializable {
     public void setActivo(boolean activo) {
         this.activo = activo;
     }
-
-
 
     @Override
     public boolean equals(Object o) {

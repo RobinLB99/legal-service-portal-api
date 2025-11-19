@@ -1,5 +1,7 @@
 package com.robinlb99.legalserviceportalapi.core.model.entity;
 
+import com.robinlb99.legalserviceportalapi.core.model.enums.EstadoCaso;
+import com.robinlb99.legalserviceportalapi.core.model.enums.TipoCaso;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -16,47 +18,86 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
-import com.robinlb99.legalserviceportalapi.core.model.enums.EstadoCaso;
-import com.robinlb99.legalserviceportalapi.core.model.enums.TipoCaso;
-
+/**
+ * Entidad que representa un caso legal.
+ */
 @Entity
 public class Caso implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
 
+    /**
+     * ID del caso.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    /**
+     * Título del caso.
+     */
     @Column(nullable = false, length = 100)
     private String titulo;
 
+    /**
+     * Descripción del caso.
+     */
     @Column(nullable = false, columnDefinition = "TEXT")
     private String descripcion;
 
+    /**
+     * Estado actual del caso.
+     */
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private EstadoCaso estado_caso;
 
+    /**
+     * Fecha de creación del caso.
+     */
     @Column(nullable = false)
     @Temporal(TemporalType.DATE)
     private LocalDate fecha_creacion;
 
+    /**
+     * Tipo de caso legal.
+     */
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private TipoCaso tipo_caso;
 
+    /**
+     * Cliente asociado al caso.
+     */
     @ManyToOne
     @JoinColumn(nullable = false, name = "cliente_id")
     private Cliente cliente;
 
+    /**
+     * Abogado asignado al caso.
+     */
     @ManyToOne
     @JoinColumn(nullable = false, name = "abogado_id")
     private Abogado abogado;
 
+    /**
+     * Constructor por defecto.
+     */
     public Caso() {}
 
+    /**
+     * Constructor con todos los campos.
+     *
+     * @param id ID del caso.
+     * @param titulo Título del caso.
+     * @param descripcion Descripción del caso.
+     * @param estado_caso Estado actual del caso.
+     * @param fecha_creacion Fecha de creación del caso.
+     * @param tipo_caso Tipo de caso legal.
+     * @param cliente Cliente asociado al caso.
+     * @param abogado Abogado asignado al caso.
+     */
     public Caso(
         Long id,
         String titulo,

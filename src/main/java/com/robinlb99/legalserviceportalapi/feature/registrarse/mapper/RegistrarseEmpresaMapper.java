@@ -6,9 +6,19 @@ import com.robinlb99.legalserviceportalapi.feature.registrarse.dto.DatosEmpresaR
 import com.robinlb99.legalserviceportalapi.feature.registrarse.dto.DatosEmpresaResponseDTO;
 import org.springframework.stereotype.Component;
 
+/**
+ * Mapper para el registro de una empresa.
+ * Convierte DTOs a entidades y viceversa.
+ */
 @Component
 public class RegistrarseEmpresaMapper {
 
+    /**
+     * Convierte un DTO de solicitud de registro de empresa a una entidad Empresa.
+     *
+     * @param empresaDto El DTO de solicitud.
+     * @return La entidad Empresa.
+     */
     public Empresa toEntity(DatosEmpresaRequestDTO empresaDto) {
         Empresa empresa = new Empresa();
         empresa.setTipo_cliente(TipoCliente.JURIDICO);
@@ -21,13 +31,18 @@ public class RegistrarseEmpresaMapper {
         return empresa;
     }
 
+    /**
+     * Convierte una entidad Empresa a un DTO de respuesta de registro de empresa.
+     *
+     * @param empresa La entidad Empresa.
+     * @return El DTO de respuesta.
+     */
     public DatosEmpresaResponseDTO toDto(Empresa empresa) {
         return new DatosEmpresaResponseDTO(
-                empresa.getId(),
-                empresa.getUsuario().getUsername(),
-                empresa.getRazon_social(),
-                empresa.getRepresentante_legal()
+            empresa.getId(),
+            empresa.getUsuario().getUsername(),
+            empresa.getRazon_social(),
+            empresa.getRepresentante_legal()
         );
     }
-
 }

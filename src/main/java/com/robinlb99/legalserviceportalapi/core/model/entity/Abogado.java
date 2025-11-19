@@ -13,31 +13,65 @@ import java.util.Objects;
 
 import com.robinlb99.legalserviceportalapi.core.model.valueobject.DatosPersonales;
 
+
+/**
+ * Entidad que representa a un abogado.
+ */
 @Entity
 public class Abogado implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
 
+    /**
+     * ID del abogado, que es el mismo que el ID del usuario asociado.
+     */
     @Id
     private Long id;
 
+    /**
+     * Usuario asociado a este abogado.
+     */
     @OneToOne
     @MapsId
     @JoinColumn(name = "id")
     private Usuario usuario;
 
+    /**
+     * Datos personales del abogado.
+     */
     @Embedded
     private DatosPersonales datosPersonales;
 
+    /**
+     * Especialidad del abogado.
+     */
     @Column(nullable = false, length = 100)
     private String especialidad;
 
+    /**
+     * Número de licencia del abogado.
+     */
     @Column(nullable = false, length = 100)
     private String licencia;
 
+    /**
+     * Constructor por defecto.
+     */
     public Abogado() {}
 
+    /**
+     * Constructor con todos los campos.
+     *
+     * @param usuario Usuario asociado.
+     * @param nombres Nombres del abogado.
+     * @param apellidos Apellidos del abogado.
+     * @param numero_cedula Número de cédula del abogado.
+     * @param correo_electronico Correo electrónico del abogado.
+     * @param numero_telefono Número de teléfono del abogado.
+     * @param especialidad Especialidad del abogado.
+     * @param licencia Número de licencia del abogado.
+     */
     public Abogado(
         Usuario usuario,
         String nombres,

@@ -18,33 +18,64 @@ import java.util.Objects;
 
 import com.robinlb99.legalserviceportalapi.core.model.enums.TipoRemitente;
 
+
+/**
+ * Entidad que representa un mensaje en un caso.
+ */
 @Entity
 public class Mensaje implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
 
+    /**
+     * ID del mensaje.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    /**
+     * Contenido del mensaje.
+     */
     @Column(nullable = false, columnDefinition = "TEXT")
     private String contenido;
 
+    /**
+     * Fecha y hora de envío del mensaje.
+     */
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime fecha_envio;
 
+    /**
+     * Tipo de remitente del mensaje (por ejemplo, CLIENTE, ABOGADO).
+     */
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private TipoRemitente remitente;
 
+    /**
+     * Caso al que pertenece el mensaje.
+     */
     @ManyToOne
     @JoinColumn(name = "caso_id", nullable = false)
     private Caso caso;
 
+    /**
+     * Constructor por defecto.
+     */
     public Mensaje() {}
 
+    /**
+     * Constructor con todos los campos.
+     *
+     * @param id ID del mensaje.
+     * @param contenido Contenido del mensaje.
+     * @param fecha_envio Fecha y hora de envío del mensaje.
+     * @param remitente Tipo de remitente del mensaje.
+     * @param caso Caso al que pertenece el mensaje.
+     */
     public Mensaje(
         Long id,
         String contenido,
@@ -113,3 +144,4 @@ public class Mensaje implements Serializable {
         return Objects.equals(id, other.id);
     }
 }
+

@@ -1,13 +1,16 @@
 package com.robinlb99.legalserviceportalapi.core.model.entity;
 
+import com.robinlb99.legalserviceportalapi.core.model.enums.TipoCliente;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import java.io.Serial;
 import java.util.Objects;
 
-import com.robinlb99.legalserviceportalapi.core.model.enums.TipoCliente;
-
+/**
+ * Entidad que representa a un cliente de tipo empresa.
+ * Extiende de la clase Cliente.
+ */
 @Entity
 @Table(name = "empresa")
 public class Empresa extends Cliente {
@@ -15,26 +18,58 @@ public class Empresa extends Cliente {
     @Serial
     private static final long serialVersionUID = 1L;
 
+    /**
+     * Razón social de la empresa.
+     */
     @Column(nullable = false, length = 100)
     private String razon_social;
 
+    /**
+     * RUC de la empresa.
+     */
     @Column(nullable = false, unique = true, length = 13)
     private String ruc;
 
+    /**
+     * Nombre del representante legal de la empresa.
+     */
     @Column(nullable = false, length = 100)
     private String representante_legal;
 
+    /**
+     * Correo electrónico institucional de la empresa.
+     */
     @Column(nullable = false, length = 100)
     private String correo_institucional;
 
+    /**
+     * Teléfono institucional de la empresa.
+     */
     @Column(nullable = false, length = 13)
     private String telefono_institucional;
 
+    /**
+     * Dirección institucional de la empresa.
+     */
     @Column(nullable = false, length = 100)
     private String direccion_institucional;
 
+    /**
+     * Constructor por defecto.
+     */
     public Empresa() {}
 
+    /**
+     * Constructor con todos los campos.
+     *
+     * @param usuario Usuario asociado.
+     * @param razon_social Razón social de la empresa.
+     * @param ruc RUC de la empresa.
+     * @param representante_legal Nombre del representante legal.
+     * @param correo_institucional Correo electrónico institucional.
+     * @param telefono_institucional Teléfono institucional.
+     * @param direccion_institucional Dirección institucional.
+     */
     public Empresa(
         Usuario usuario,
         String razon_social,

@@ -2,7 +2,6 @@ package com.robinlb99.legalserviceportalapi.core.model.entity;
 
 import com.robinlb99.legalserviceportalapi.common.util.JsonbConverter;
 import com.robinlb99.legalserviceportalapi.core.model.enums.TipoDocumento;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
@@ -21,40 +20,78 @@ import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Objects;
 
+/**
+ * Entidad que representa un documento asociado a un caso.
+ */
 @Entity
 public class Documento implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
 
+    /**
+     * ID del documento.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    /**
+     * Nombre del documento.
+     */
     @Column(nullable = false, length = 100)
     private String nombre;
 
+    /**
+     * Tipo de documento.
+     */
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private TipoDocumento tipo_documento;
 
+    /**
+     * URL del archivo del documento.
+     */
     @Column(nullable = false, length = 255)
     private String url_archivo;
 
+    /**
+     * Fecha y hora de subida del documento.
+     */
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime fecha_subida;
 
+    /**
+     * Caso al que pertenece el documento.
+     */
     @ManyToOne
     @JoinColumn(nullable = false, name = "caso_id")
     private Caso caso;
 
+    /**
+     * Metadatos del documento, almacenados como JSON.
+     */
     @Column(columnDefinition = "jsonb")
     @Convert(converter = JsonbConverter.class)
     private Map<String, Object> metadatos;
 
+    /**
+     * Constructor por defecto.
+     */
     public Documento() {}
 
+    /**
+     * Constructor con todos los campos.
+     *
+     * @param id ID del documento.
+     * @param nombre Nombre del documento.
+     * @param tipo_documento Tipo de documento.
+     * @param url_archivo URL del archivo del documento.
+     * @param fecha_subida Fecha y hora de subida del documento.
+     * @param caso Caso al que pertenece el documento.
+     * @param metadatos Metadatos del documento.
+     */
     public Documento(
         Long id,
         String nombre,
