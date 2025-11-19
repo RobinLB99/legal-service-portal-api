@@ -12,8 +12,6 @@ import com.robinlb99.legalserviceportalapi.feature.registrarse.mapper.Registrars
 import com.robinlb99.legalserviceportalapi.feature.registrarse.mapper.RegistrarseUsuarioMapper;
 import com.robinlb99.legalserviceportalapi.feature.registrarse.service.contract.IRegistrarseService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
