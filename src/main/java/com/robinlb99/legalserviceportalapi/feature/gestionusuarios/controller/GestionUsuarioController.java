@@ -6,6 +6,7 @@ import com.robinlb99.legalserviceportalapi.feature.gestionusuarios.dto.UsuarioUs
 import com.robinlb99.legalserviceportalapi.feature.gestionusuarios.service.GestionUsuarioServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -32,48 +33,53 @@ public class GestionUsuarioController {
     /**
      * Actualiza el estado de habilitación de un usuario.
      *
-     * @param id El ID del usuario.
-     * @param estadoDTO DTO con el nuevo estado.
+     * @param username Identificador del usuario a actualizar.
+     * @param estadoDTO DTO que contiene el nuevo estado de habilitación.
      * @return ResponseEntity con estado 204 No Content si la operación es exitosa.
      */
-    @PatchMapping("/{id}/estado")
+    @PatchMapping("/{username}/estado")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> actualizarEstadoUsuario(
-        @PathVariable Long id,
+        @PathVariable String username,
         @Valid @RequestBody UsuarioEstadoPatchDTO estadoDTO
     ) {
-        gestionUsuarioService.actualizarEstadoUsuario(id, estadoDTO);
+        gestionUsuarioService.actualizarEstadoUsuario(username, estadoDTO);
         return ResponseEntity.noContent().build();
     }
 
     /**
      * Actualiza el nombre de usuario de un usuario.
      *
-     * @param id El ID del usuario.
-     * @param usernameDTO DTO con el nuevo nombre de usuario.
+     * @param username Identificador del usuario a actualizar.
+     * @param usernameDTO DTO que contiene el nuevo nombre de usuario.
      * @return ResponseEntity con estado 204 No Content si la operación es exitosa.
      */
-    @PatchMapping("/{id}/username")
+    @PatchMapping("/{username}/username")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> actualizarUsernameUsuario(
-        @PathVariable Long id,
+        @PathVariable String username,
         @Valid @RequestBody UsuarioUsernamePatchDTO usernameDTO
     ) {
-        gestionUsuarioService.actualizarUsernameUsuario(id, usernameDTO);
+        gestionUsuarioService.actualizarUsernameUsuario(username, usernameDTO);
         return ResponseEntity.noContent().build();
     }
 
     /**
      * Actualiza la contraseña de un usuario.
      *
-     * @param id El ID del usuario.
-     * @param passwordDTO DTO con la nueva contraseña.
+     * @param username Identificador del usuario a actualizar.
+     * @param passwordDTO DTO que contiene la nueva contraseña.
      * @return ResponseEntity con estado 204 No Content si la operación es exitosa.
      */
-    @PatchMapping("/{id}/password")
+    @PatchMapping("/{username}/password")
+    @PreAuthorize(
+        "hasAnyRole('CLIENTE', 'ABOGADO') and #username == principal.username"
+    )
     public ResponseEntity<Void> actualizarPassword(
-        @PathVariable Long id,
+        @PathVariable String username,
         @Valid @RequestBody UsuarioPasswordPatchDTO passwordDTO
     ) {
-        gestionUsuarioService.actualizarPasswordUsuario(id, passwordDTO);
+        gestionUsuarioService.actualizarPasswordUsuario(username, passwordDTO);
         return ResponseEntity.noContent().build();
     }
 }

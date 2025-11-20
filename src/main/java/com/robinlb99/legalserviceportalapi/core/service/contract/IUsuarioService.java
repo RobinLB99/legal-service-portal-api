@@ -1,6 +1,7 @@
 package com.robinlb99.legalserviceportalapi.core.service.contract;
 
 import com.robinlb99.legalserviceportalapi.core.model.entity.Usuario;
+import com.robinlb99.legalserviceportalapi.core.model.exception.UsuarioNotFoundException;
 
 
 /**
@@ -23,15 +24,10 @@ public interface IUsuarioService {
      *
      * @param idUsuario El ID del usuario a buscar.
      * @return El usuario encontrado.
+     * @throws UsuarioNotFoundException si no se encuentra ningún usuario con el ID proporcionado.
      */
     Usuario buscarUsuarioPorId(Long idUsuario);
 
-    /**
-     * Elimina un usuario por su ID.
-     *
-     * @param idUsuario El ID del usuario a eliminar.
-     */
-    void eliminarUsuarioPorId(Long idUsuario);
 
     /**
      * Actualiza la contraseña codificada de un usuario.
@@ -42,10 +38,19 @@ public interface IUsuarioService {
     void actualizarContrasenaCodificada(Long idUsuario, String nuevaContrasenaCodificada);
 
     /**
+     * Actualiza el nombre de usuario de un usuario.
+     *
+     * @param id El ID del usuario.
+     * @param nuevoUsername El nuevo nombre de usuario.
+     */
+    void actualizarNombreUsuario(Long id, String nuevoUsername);
+
+    /**
      * Busca un usuario por su nombre de usuario.
      *
      * @param nombreUsuario El nombre de usuario a buscar.
      * @return El usuario encontrado.
+     * @throws UsuarioNotFoundException si no se encuentra ningún usuario con el nombre de usuario proporcionado.
      */
     Usuario buscarUsuarioPorNombreUsuario(String nombreUsuario);
 

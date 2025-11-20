@@ -7,5 +7,5 @@ import jakarta.validation.constraints.NotNull;
  * @param enabled El nuevo estado del usuario (true para habilitado, false para deshabilitado).
  */
 public record UsuarioEstadoPatchDTO(
-    @NotNull(message = "El campo 'Activo' no puede ser nulo") boolean enabled
+    @NotNull(message = "El campo 'enabled' no puede ser nulo") boolean enabled
 ) {}

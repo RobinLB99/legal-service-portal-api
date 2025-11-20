@@ -7,6 +7,6 @@ import jakarta.validation.constraints.NotBlank;
  * @param plainPassword La nueva contraseña en texto plano.
  */
 public record UsuarioPasswordPatchDTO(
-    @NotBlank(message = "La contraseña no puede ser nulo o vacía")
+    @NotBlank(message = "La contraseña no puede ser nula o vacía")
     String plainPassword
 ) {}

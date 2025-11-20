@@ -26,10 +26,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
     }
 
     /**
-     * Crea un nuevo usuario.
-     *
-     * @param usuario El usuario a crear.
-     * @return El usuario creado.
+     * {@inheritDoc}
      */
     @Override
     @Transactional
@@ -38,11 +35,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
     }
 
     /**
-     * Busca un usuario por su ID.
-     *
-     * @param idUsuario El ID del usuario a buscar.
-     * @return El usuario encontrado.
-     * @throws UsuarioNotFoundException Si no se encuentra ningún usuario con el ID proporcionado.
+     * {@inheritDoc}
      */
     @Override
     @Transactional
@@ -57,21 +50,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
     }
 
     /**
-     * Elimina un usuario por su ID.
-     *
-     * @param idUsuario El ID del usuario a eliminar.
-     */
-    @Override
-    @Transactional
-    public void eliminarUsuarioPorId(Long idUsuario) {
-        usuarioRepository.deleteById(idUsuario);
-    }
-
-    /**
-     * Actualiza la contraseña codificada de un usuario.
-     *
-     * @param idUsuario El ID del usuario.
-     * @param nuevaContrasenaCodificada La nueva contraseña codificada.
+     * {@inheritDoc}
      */
     @Override
     @Transactional
@@ -86,11 +65,16 @@ public class UsuarioServiceImpl implements IUsuarioService {
     }
 
     /**
-     * Busca un usuario por su nombre de usuario.
-     *
-     * @param nombreUsuario El nombre de usuario a buscar.
-     * @return El usuario encontrado.
-     * @throws UsuarioNotFoundException Si no se encuentra ningún usuario con el nombre de usuario proporcionado.
+     * {@inheritDoc}
+     */
+    @Override
+    @Transactional
+    public void actualizarNombreUsuario(Long id, String nuevoUsername) {
+        usuarioRepository.updateUsername(id, nuevoUsername);
+    }
+
+    /**
+     * {@inheritDoc}
      */
     @Override
     @Transactional(readOnly = true)
@@ -105,9 +89,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
     }
 
     /**
-     * Deshabilita un usuario por su ID.
-     *
-     * @param idUsuario El ID del usuario a deshabilitar.
+     * {@inheritDoc}
      */
     @Override
     @Transactional
@@ -116,9 +98,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
     }
 
     /**
-     * Deshabilita un usuario por su nombre de usuario.
-     *
-     * @param nombreUsuario El nombre de usuario del usuario a deshabilitar.
+     * {@inheritDoc}
      */
     @Override
     @Transactional
@@ -127,9 +107,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
     }
 
     /**
-     * Habilita un usuario por su ID.
-     *
-     * @param idUsuario El ID del usuario a habilitar.
+     * {@inheritDoc}
      */
     @Override
     @Transactional
@@ -138,9 +116,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
     }
 
     /**
-     * Habilita un usuario por su nombre de usuario.
-     *
-     * @param nombreUsuario El nombre de usuario del usuario a habilitar.
+     * {@inheritDoc}
      */
     @Override
     @Transactional
@@ -149,10 +125,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
     }
 
     /**
-     * Comprueba si existe un usuario con el nombre de usuario proporcionado.
-     *
-     * @param nombreUsuario El nombre de usuario a comprobar.
-     * @return true si existe un usuario con el nombre de usuario proporcionado, false en caso contrario.
+     * {@inheritDoc}
      */
     @Override
     @Transactional

@@ -1,9 +1,10 @@
 package com.robinlb99.legalserviceportalapi.feature.gestionusuarios.service;
 
 import com.robinlb99.legalserviceportalapi.common.util.PasswordService;
+import com.robinlb99.legalserviceportalapi.core.model.entity.Usuario;
 import com.robinlb99.legalserviceportalapi.core.model.exception.SamePasswordException;
 import com.robinlb99.legalserviceportalapi.core.model.exception.UsuarioNotFoundException;
-import com.robinlb99.legalserviceportalapi.core.repository.UsuarioRepository;
+import com.robinlb99.legalserviceportalapi.core.service.UsuarioServiceImpl;
 import com.robinlb99.legalserviceportalapi.feature.gestionusuarios.dto.UsuarioEstadoPatchDTO;
 import com.robinlb99.legalserviceportalapi.feature.gestionusuarios.dto.UsuarioPasswordPatchDTO;
 import com.robinlb99.legalserviceportalapi.feature.gestionusuarios.dto.UsuarioUsernamePatchDTO;
@@ -17,88 +18,72 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class GestionUsuarioServiceImpl implements IGestionUsuariosService {
 
-    private final UsuarioRepository usuarioRepository;
+    private final UsuarioServiceImpl usuarioService;
     private final PasswordService passwordService;
 
     /**
      * Constructor para la inyección de dependencias.
      *
-     * @param usuarioRepository Repositorio para las operaciones de base de datos de usuarios.
-     * @param passwordService   Servicio para la codificación y verificación de contraseñas.
+     * @param usuarioService Servicio para las operaciones de base de datos de usuarios.
+     * @param passwordService Servicio para la codificación y verificación de contraseñas.
      */
     public GestionUsuarioServiceImpl(
-        UsuarioRepository usuarioRepository,
-        PasswordService passwordService
+            UsuarioServiceImpl usuarioService,
+            PasswordService passwordService
     ) {
-        this.usuarioRepository = usuarioRepository;
+        this.usuarioService = usuarioService;
         this.passwordService = passwordService;
     }
 
     /**
      * {@inheritDoc}
-     * @throws UsuarioNotFoundException si el usuario con el ID proporcionado no existe.
      */
     @Override
     @Transactional
     public void actualizarEstadoUsuario(
-        Long id,
+        String username,
         UsuarioEstadoPatchDTO estadoDTO
     ) {
-        if (!usuarioRepository.existsById(id)) {
-            throw new UsuarioNotFoundException(
-                "Usuario con ID '" + id + "' no encontrado"
-            );
-        }
+        Usuario usuario = usuarioService.buscarUsuarioPorNombreUsuario(username);
 
         if (estadoDTO.enabled()) {
-            usuarioRepository.enableUserById(id);
+            usuarioService.habilitarUsuarioPorNombreUsuario(username);
         } else {
-            usuarioRepository.disableUserById(id);
+            usuarioService.deshabilitarUsuarioPorNombreUsuario(username);
         }
     }
 
     /**
      * {@inheritDoc}
-     * @throws UsuarioNotFoundException si el usuario con el ID proporcionado no existe.
      */
     @Override
     @Transactional
     public void actualizarUsernameUsuario(
-        Long id,
+        String username,
         UsuarioUsernamePatchDTO usernameDTO
     ) {
-        if (!usuarioRepository.existsById(id)) {
-            throw new UsuarioNotFoundException(
-                "Usuario con ID '" + id + "' no encontrado"
-            );
-        }
-        usuarioRepository.updateUsername(id, usernameDTO.username().trim());
+        Usuario usuario = usuarioService.buscarUsuarioPorNombreUsuario(username);
+        usuarioService.actualizarNombreUsuario(
+                usuario.getId(),
+                usernameDTO.username().trim()
+        );
     }
 
     /**
      * {@inheritDoc}
-     * @throws UsuarioNotFoundException si el usuario con el ID proporcionado no existe.
-     * @throws SamePasswordException si la nueva contraseña es igual a la actual.
      */
     @Override
     @Transactional
     public void actualizarPasswordUsuario(
-        Long id,
+        String username,
         UsuarioPasswordPatchDTO passwordDTO
     ) {
-        String passwordHash = usuarioRepository
-            .findById(id)
-            .orElseThrow(() ->
-                new UsuarioNotFoundException(
-                    "Usuario con ID '" + id + "' no encontrado"
-                )
-            )
-            .getPassword_hash();
+        Usuario usuario = usuarioService.buscarUsuarioPorNombreUsuario(username);
 
         if (
             passwordService.verifyPassword(
                 passwordDTO.plainPassword(),
-                passwordHash
+                usuario.getPassword_hash()
             )
         ) {
             throw new SamePasswordException(
@@ -106,8 +91,8 @@ public class GestionUsuarioServiceImpl implements IGestionUsuariosService {
             );
         }
 
-        usuarioRepository.updatePasswordEncode(
-            id,
+        usuarioService.actualizarContrasenaCodificada(
+            usuario.getId(),
             passwordService.hashPassword(passwordDTO.plainPassword())
         );
     }

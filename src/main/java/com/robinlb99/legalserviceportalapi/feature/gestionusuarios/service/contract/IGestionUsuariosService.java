@@ -1,5 +1,7 @@
 package com.robinlb99.legalserviceportalapi.feature.gestionusuarios.service.contract;
 
+import com.robinlb99.legalserviceportalapi.core.model.exception.SamePasswordException;
+import com.robinlb99.legalserviceportalapi.core.model.exception.UsuarioNotFoundException;
 import com.robinlb99.legalserviceportalapi.feature.gestionusuarios.dto.UsuarioEstadoPatchDTO;
 import com.robinlb99.legalserviceportalapi.feature.gestionusuarios.dto.UsuarioPasswordPatchDTO;
 import com.robinlb99.legalserviceportalapi.feature.gestionusuarios.dto.UsuarioUsernamePatchDTO;
@@ -11,30 +13,34 @@ public interface IGestionUsuariosService {
     /**
      * Actualiza el estado de habilitación de un usuario.
      *
-     * @param id El ID del usuario a actualizar.
+     * @param username El username del usuario a actualizar.
      * @param estadoDTO DTO con el nuevo estado de habilitación.
+     * @throws UsuarioNotFoundException si no se encuentra el usuario.
      */
-    void actualizarEstadoUsuario(Long id, UsuarioEstadoPatchDTO estadoDTO);
+    void actualizarEstadoUsuario(String username, UsuarioEstadoPatchDTO estadoDTO);
 
     /**
      * Actualiza el nombre de usuario de un usuario.
      *
-     * @param id El ID del usuario a actualizar.
+     * @param username El username del usuario a actualizar.
      * @param usernameDTO DTO con el nuevo nombre de usuario.
+     * @throws UsuarioNotFoundException si no se encuentra el usuario.
      */
     void actualizarUsernameUsuario(
-        Long id,
+        String username,
         UsuarioUsernamePatchDTO usernameDTO
     );
 
     /**
      * Actualiza la contraseña de un usuario.
      *
-     * @param id El ID del usuario a actualizar.
+     * @param username El username del usuario a actualizar.
      * @param passwordDTO DTO con la nueva contraseña.
+     * @throws UsuarioNotFoundException si no se encuentra el usuario.
+     * @throws SamePasswordException si la nueva contraseña es igual a la actual.
      */
     void actualizarPasswordUsuario(
-        Long id,
+        String username,
         UsuarioPasswordPatchDTO passwordDTO
     );
 }
