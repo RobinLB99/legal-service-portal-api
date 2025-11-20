@@ -14,6 +14,16 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
+    
+    /**
+     * Actualiza el nombre de usuario de un usuario por su ID.
+     *
+     * @param id El ID del usuario.
+     * @param newUsername El nuevo nombre de usuario.
+     */
+    @Modifying
+    @Query("UPDATE Usuario u SET u.username = :newUsername WHERE u.id = :id")
+    public void updateUsername(Long id, String newUsername);
 
     /**
      * Actualiza el hash de la contraseña de un usuario por su ID.
