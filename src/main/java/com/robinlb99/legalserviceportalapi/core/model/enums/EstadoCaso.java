@@ -16,4 +16,12 @@ public enum EstadoCaso {
      * El caso está cerrado.
      */
     CERRADO,
+    /**
+     * El caso fue rechazado.
+     */
+    RECHAZADO,
+    /**
+     * El caso fue cancelado.
+     */
+    CANCELADO,
 }
