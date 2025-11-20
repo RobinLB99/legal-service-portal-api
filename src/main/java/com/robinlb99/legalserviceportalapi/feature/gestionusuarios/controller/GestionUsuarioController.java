@@ -33,53 +33,47 @@ public class GestionUsuarioController {
     /**
      * Actualiza el estado de habilitación de un usuario.
      *
-     * @param username Identificador del usuario a actualizar.
-     * @param estadoDTO DTO que contiene el nuevo estado de habilitación.
+     * @param estadoDTO DTO que contiene el usuario a modificar y nuevo estado de habilitación.
      * @return ResponseEntity con estado 204 No Content si la operación es exitosa.
      */
-    @PatchMapping("/{username}/estado")
+    @PatchMapping("/estado")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> actualizarEstadoUsuario(
-        @PathVariable String username,
         @Valid @RequestBody UsuarioEstadoPatchDTO estadoDTO
     ) {
-        gestionUsuarioService.actualizarEstadoUsuario(username, estadoDTO);
+        gestionUsuarioService.actualizarEstadoUsuario(estadoDTO);
         return ResponseEntity.noContent().build();
     }
 
     /**
      * Actualiza el nombre de usuario de un usuario.
      *
-     * @param username Identificador del usuario a actualizar.
      * @param usernameDTO DTO que contiene el nuevo nombre de usuario.
      * @return ResponseEntity con estado 204 No Content si la operación es exitosa.
      */
-    @PatchMapping("/{username}/username")
+    @PatchMapping("/username")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> actualizarUsernameUsuario(
-        @PathVariable String username,
         @Valid @RequestBody UsuarioUsernamePatchDTO usernameDTO
     ) {
-        gestionUsuarioService.actualizarUsernameUsuario(username, usernameDTO);
+        gestionUsuarioService.actualizarUsernameUsuario(usernameDTO);
         return ResponseEntity.noContent().build();
     }
 
     /**
      * Actualiza la contraseña de un usuario.
      *
-     * @param username Identificador del usuario a actualizar.
-     * @param passwordDTO DTO que contiene la nueva contraseña.
+     * @param passwordDTO DTO que contiene el nombre usuario a modificar y la nueva contraseña.
      * @return ResponseEntity con estado 204 No Content si la operación es exitosa.
      */
-    @PatchMapping("/{username}/password")
+    @PatchMapping("/password")
     @PreAuthorize(
-        "hasAnyRole('CLIENTE', 'ABOGADO') and #username == principal.username"
+        "hasAnyRole('CLIENTE', 'ABOGADO')"
     )
     public ResponseEntity<Void> actualizarPassword(
-        @PathVariable String username,
         @Valid @RequestBody UsuarioPasswordPatchDTO passwordDTO
     ) {
-        gestionUsuarioService.actualizarPasswordUsuario(username, passwordDTO);
+        gestionUsuarioService.actualizarPasswordUsuario(passwordDTO);
         return ResponseEntity.noContent().build();
     }
 }

@@ -3,7 +3,6 @@ package com.robinlb99.legalserviceportalapi.feature.gestionusuarios.service;
 import com.robinlb99.legalserviceportalapi.common.util.PasswordService;
 import com.robinlb99.legalserviceportalapi.core.model.entity.Usuario;
 import com.robinlb99.legalserviceportalapi.core.model.exception.SamePasswordException;
-import com.robinlb99.legalserviceportalapi.core.model.exception.UsuarioNotFoundException;
 import com.robinlb99.legalserviceportalapi.core.service.UsuarioServiceImpl;
 import com.robinlb99.legalserviceportalapi.feature.gestionusuarios.dto.UsuarioEstadoPatchDTO;
 import com.robinlb99.legalserviceportalapi.feature.gestionusuarios.dto.UsuarioPasswordPatchDTO;
@@ -41,15 +40,14 @@ public class GestionUsuarioServiceImpl implements IGestionUsuariosService {
     @Override
     @Transactional
     public void actualizarEstadoUsuario(
-        String username,
         UsuarioEstadoPatchDTO estadoDTO
     ) {
-        Usuario usuario = usuarioService.buscarUsuarioPorNombreUsuario(username);
+        Usuario usuario = usuarioService.buscarUsuarioPorNombreUsuario(estadoDTO.username());
 
         if (estadoDTO.enabled()) {
-            usuarioService.habilitarUsuarioPorNombreUsuario(username);
+            usuarioService.habilitarUsuarioPorNombreUsuario(estadoDTO.username());
         } else {
-            usuarioService.deshabilitarUsuarioPorNombreUsuario(username);
+            usuarioService.deshabilitarUsuarioPorNombreUsuario(estadoDTO.username());
         }
     }
 
@@ -59,13 +57,13 @@ public class GestionUsuarioServiceImpl implements IGestionUsuariosService {
     @Override
     @Transactional
     public void actualizarUsernameUsuario(
-        String username,
         UsuarioUsernamePatchDTO usernameDTO
     ) {
-        Usuario usuario = usuarioService.buscarUsuarioPorNombreUsuario(username);
+        Usuario usuario = usuarioService.buscarUsuarioPorNombreUsuario(usernameDTO.currentUsername());
+
         usuarioService.actualizarNombreUsuario(
                 usuario.getId(),
-                usernameDTO.username().trim()
+                usernameDTO.newUsername().trim()
         );
     }
 
@@ -75,14 +73,13 @@ public class GestionUsuarioServiceImpl implements IGestionUsuariosService {
     @Override
     @Transactional
     public void actualizarPasswordUsuario(
-        String username,
         UsuarioPasswordPatchDTO passwordDTO
     ) {
-        Usuario usuario = usuarioService.buscarUsuarioPorNombreUsuario(username);
+        Usuario usuario = usuarioService.buscarUsuarioPorNombreUsuario(passwordDTO.username());
 
         if (
             passwordService.verifyPassword(
-                passwordDTO.plainPassword(),
+                passwordDTO.newPlainPassword(),
                 usuario.getPassword_hash()
             )
         ) {
@@ -93,7 +90,7 @@ public class GestionUsuarioServiceImpl implements IGestionUsuariosService {
 
         usuarioService.actualizarContrasenaCodificada(
             usuario.getId(),
-            passwordService.hashPassword(passwordDTO.plainPassword())
+            passwordService.hashPassword(passwordDTO.newPlainPassword())
         );
     }
 }
