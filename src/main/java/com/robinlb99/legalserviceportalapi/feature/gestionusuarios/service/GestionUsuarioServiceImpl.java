@@ -42,12 +42,16 @@ public class GestionUsuarioServiceImpl implements IGestionUsuariosService {
     public void actualizarEstadoUsuario(
         UsuarioEstadoPatchDTO estadoDTO
     ) {
-        Usuario usuario = usuarioService.buscarUsuarioPorNombreUsuario(estadoDTO.username());
+        String username = estadoDTO.username().trim();
+
+        // Llama el servicio para buscar el usuario por nombre. No si no lo encuentra
+        // devuelve una Exception.
+        usuarioService.buscarUsuarioPorNombreUsuario(username);
 
         if (estadoDTO.enabled()) {
-            usuarioService.habilitarUsuarioPorNombreUsuario(estadoDTO.username());
+            usuarioService.habilitarUsuarioPorNombreUsuario(username);
         } else {
-            usuarioService.deshabilitarUsuarioPorNombreUsuario(estadoDTO.username());
+            usuarioService.deshabilitarUsuarioPorNombreUsuario(username);
         }
     }
 
@@ -59,7 +63,11 @@ public class GestionUsuarioServiceImpl implements IGestionUsuariosService {
     public void actualizarUsernameUsuario(
         UsuarioUsernamePatchDTO usernameDTO
     ) {
-        Usuario usuario = usuarioService.buscarUsuarioPorNombreUsuario(usernameDTO.currentUsername());
+        // Llama el servicio para buscar el usuario por nombre. No si no lo encuentra
+        // devuelve una Exception.
+        Usuario usuario = usuarioService.buscarUsuarioPorNombreUsuario(
+            usernameDTO.currentUsername().trim()
+        );
 
         usuarioService.actualizarNombreUsuario(
                 usuario.getId(),
@@ -75,11 +83,17 @@ public class GestionUsuarioServiceImpl implements IGestionUsuariosService {
     public void actualizarPasswordUsuario(
         UsuarioPasswordPatchDTO passwordDTO
     ) {
-        Usuario usuario = usuarioService.buscarUsuarioPorNombreUsuario(passwordDTO.username());
+        String newPlainPassword = passwordDTO.newPlainPassword().trim();
+
+        // Llama el servicio para buscar el usuario por nombre. No si no lo encuentra
+        // devuelve una Exception.
+        Usuario usuario = usuarioService.buscarUsuarioPorNombreUsuario(
+                passwordDTO.username().trim()
+        );
 
         if (
             passwordService.verifyPassword(
-                passwordDTO.newPlainPassword(),
+                newPlainPassword,
                 usuario.getPassword_hash()
             )
         ) {
@@ -90,7 +104,7 @@ public class GestionUsuarioServiceImpl implements IGestionUsuariosService {
 
         usuarioService.actualizarContrasenaCodificada(
             usuario.getId(),
-            passwordService.hashPassword(passwordDTO.newPlainPassword())
+            passwordService.hashPassword(newPlainPassword)
         );
     }
 }
