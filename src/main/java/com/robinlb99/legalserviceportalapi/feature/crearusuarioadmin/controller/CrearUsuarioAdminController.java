@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
  * Controlador para la creación del usuario administrador.
  */
 @RestController
-@RequestMapping("/api/admin-user")
+@RequestMapping("/api/admin")
 public class CrearUsuarioAdminController {
 
     private final CrearUsuarioAdminServiceImpl crearUsuarioAdminService;
