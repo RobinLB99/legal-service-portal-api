@@ -32,12 +32,13 @@ public class GestionUsuarioController {
 
     /**
      * Actualiza el estado de habilitación de un usuario.
+     * Solo lo puede hacer el usuario 'admin'.
      *
      * @param estadoDTO DTO que contiene el usuario a modificar y nuevo estado de habilitación.
      * @return ResponseEntity con estado 204 No Content si la operación es exitosa.
      */
     @PatchMapping("/estado")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN') && authentication.name == 'admin'")
     public ResponseEntity<Void> actualizarEstadoUsuario(
         @Valid @RequestBody UsuarioEstadoPatchDTO estadoDTO
     ) {
@@ -47,12 +48,13 @@ public class GestionUsuarioController {
 
     /**
      * Actualiza el nombre de usuario de un usuario.
+     * Solo lo puede hacer el usuario 'admin'.
      *
      * @param usernameDTO DTO que contiene el nuevo nombre de usuario.
      * @return ResponseEntity con estado 204 No Content si la operación es exitosa.
      */
     @PatchMapping("/username")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN') && authentication.name == 'admin'")
     public ResponseEntity<Void> actualizarUsernameUsuario(
         @Valid @RequestBody UsuarioUsernamePatchDTO usernameDTO
     ) {
@@ -61,14 +63,14 @@ public class GestionUsuarioController {
     }
 
     /**
-     * Actualiza la contraseña de un usuario.
+     * Actualiza la contraseña del usuario actualmente loggeado.
      *
      * @param passwordDTO DTO que contiene el nombre usuario a modificar y la nueva contraseña.
      * @return ResponseEntity con estado 204 No Content si la operación es exitosa.
      */
     @PatchMapping("/password")
     @PreAuthorize(
-        "hasAnyRole('CLIENTE', 'ABOGADO')"
+        "hasAnyRole('CLIENTE', 'ABOGADO') && authentication.name == #passwordDTO.username"
     )
     public ResponseEntity<Void> actualizarPassword(
         @Valid @RequestBody UsuarioPasswordPatchDTO passwordDTO
