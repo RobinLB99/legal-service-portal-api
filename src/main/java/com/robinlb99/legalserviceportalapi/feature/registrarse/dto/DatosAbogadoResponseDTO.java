@@ -1,13 +1,13 @@
 package com.robinlb99.legalserviceportalapi.feature.registrarse.dto;
 
 /**
- * DTO for the response of registering a lawyer.
- * @param id ID of the registered lawyer.
- * @param username Username of the registered lawyer.
- * @param nombres First names of the registered lawyer.
- * @param apellidos Last names of the registered lawyer.
- * @param especialidad Speciality of the registered lawyer.
- * @param licencia License of the registered lawyer.
+ * DTO para la respuesta de registro de un abogado.
+ * @param id ID del abogado registrado.
+ * @param username Nombre de usuario del abogado registrado.
+ * @param nombres Nombres del abogado registrado.
+ * @param apellidos Apellidos del abogado registrado.
+ * @param especialidad Especialidad del abogado registrado.
+ * @param licencia Licencia del abogado registrado.
  */
 public record DatosAbogadoResponseDTO(
     Long id,
