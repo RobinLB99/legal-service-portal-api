@@ -61,6 +61,12 @@ public class Caso implements Serializable {
     private LocalDate fecha_creacion;
 
     /**
+     * Fecha de la última actualización del caso.
+     */
+    @Temporal(TemporalType.DATE)
+    private LocalDate fecha_actualizacion;
+
+    /**
      * Tipo de caso legal.
      */
     @Column(nullable = false)
@@ -94,6 +100,7 @@ public class Caso implements Serializable {
      * @param descripcion Descripción del caso.
      * @param estado_caso Estado actual del caso.
      * @param fecha_creacion Fecha de creación del caso.
+     * @param fecha_actualizacion Ultima fecha de actualización del caso.
      * @param tipo_caso Tipo de caso legal.
      * @param cliente Cliente asociado al caso.
      * @param abogado Abogado asignado al caso.
@@ -104,6 +111,7 @@ public class Caso implements Serializable {
         String descripcion,
         EstadoCaso estado_caso,
         LocalDate fecha_creacion,
+        LocalDate fecha_actualizacion,
         TipoCaso tipo_caso,
         Cliente cliente,
         Abogado abogado
@@ -113,6 +121,7 @@ public class Caso implements Serializable {
         this.descripcion = descripcion;
         this.estado_caso = estado_caso;
         this.fecha_creacion = fecha_creacion;
+        this.fecha_actualizacion = fecha_actualizacion;
         this.tipo_caso = tipo_caso;
         this.cliente = cliente;
         this.abogado = abogado;
@@ -156,6 +165,14 @@ public class Caso implements Serializable {
 
     public void setFecha_creacion(LocalDate fecha_creacion) {
         this.fecha_creacion = fecha_creacion;
+    }
+
+    public LocalDate getFecha_actualizacion() {
+        return fecha_actualizacion;
+    }
+
+    public void setFecha_actualizacion(LocalDate fecha_actualizacion) {
+        this.fecha_actualizacion = fecha_actualizacion;
     }
 
     public TipoCaso getTipo_caso() {
