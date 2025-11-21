@@ -74,7 +74,7 @@ public class SecurityConfig {
                         "/swagger-ui.html"
                     ).permitAll()
 
-                    .requestMatchers("/api/admin-user/").permitAll()
+                    .requestMatchers("/api/admin/").permitAll()
 
                     .anyRequest().authenticated()
             )
