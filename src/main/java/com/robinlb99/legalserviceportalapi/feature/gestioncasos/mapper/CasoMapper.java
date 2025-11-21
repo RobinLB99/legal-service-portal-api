@@ -56,7 +56,6 @@ public class CasoMapper {
             caso.getTipo_caso().name(),
             caso.getFecha_creacion(),
             caso.getFecha_actualizacion(),
-            caso.getFecha_cierre(),
             caso.getAbogado().getId(),
             caso.getCliente().getId()
         );

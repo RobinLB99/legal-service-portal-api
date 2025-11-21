@@ -22,7 +22,6 @@ public record CasoResponseDTO(
     String tipoCaso,
     LocalDate fechaCreacion,
     LocalDate fechaActualizacion,
-    LocalDate fechaCierre,
     Long abogadoId,
     Long clienteId
 ) {}
