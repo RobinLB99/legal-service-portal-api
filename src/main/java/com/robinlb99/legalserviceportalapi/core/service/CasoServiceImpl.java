@@ -8,8 +8,11 @@ import com.robinlb99.legalserviceportalapi.core.service.contract.ICasoService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
 
 /**
  * Implementación del servicio de gestión de casos.
@@ -47,6 +50,41 @@ public class CasoServiceImpl implements ICasoService {
     }
 
     /**
+     * Actualiza el título de un caso existente.
+     *
+     * @param idCaso El ID del caso a actualizar.
+     * @param tituloCaso El nuevo título del caso.
+     */
+    @Override
+    @Transactional
+    public void actualizarTituloCaso(Long idCaso, String tituloCaso) {
+        casoRepository.updateCasoTitle(idCaso, tituloCaso);
+    }
+
+    /**
+     * Actualiza la descripción de un caso existente.
+     *
+     * @param idCaso El ID del caso a actualizar.
+     * @param descripcionCaso La nueva descripción del caso.
+     */
+    @Override
+    @Transactional
+    public void actualizarDescripcionCaso(Long idCaso, String descripcionCaso) {
+        casoRepository.updateDescripcionCaso(idCaso, descripcionCaso);
+    }
+    
+    /**
+     * Registra la fecha de actualización de un caso.
+     *
+     * @param id El ID del caso a actualizar.
+     */
+    @Override
+    @Transactional
+    public void registrarFechaAtualizacionCaso(Long id) {
+        casoRepository.updateFechaActualizacion(id, LocalDate.now());
+    }
+
+    /**
      * Obtiene un caso por su ID.
      *
      * @param id El ID del caso a obtener.
@@ -80,7 +118,11 @@ public class CasoServiceImpl implements ICasoService {
         int numPage,
         int numRow
     ) {
-        Pageable pageable = PageRequest.of(numPage, numRow);
+        Pageable pageable = PageRequest.of(
+            numPage,
+            numRow,
+            Sort.by("id").ascending()
+        );
         return casoRepository.findAllByEstado(estado, pageable);
     }
 

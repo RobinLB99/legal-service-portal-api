@@ -27,6 +27,29 @@ public interface ICasoService {
     void actualizarEstadoCaso(Long idCaso, EstadoCaso nuevoEstadoCaso);
 
     /**
+     * Actualiza el título de un caso existente.
+     *
+     * @param idCaso     El ID del caso a actualizar.
+     * @param tituloCaso El nuevo título para el caso.
+     */
+    void actualizarTituloCaso(Long idCaso, String tituloCaso);
+
+    /**
+     * Actualiza la descripción de un caso existente.
+     *
+     * @param idCaso          El ID del caso a actualizar.
+     * @param descripcionCaso La nueva descripción para el caso.
+     */
+    void actualizarDescripcionCaso(Long idCaso, String descripcionCaso);
+
+        /**
+     * Registra la fecha de actualización de un caso específico.
+     *
+     * @param id El ID del caso a actualizar.
+     */
+    void registrarFechaAtualizacionCaso(Long id);
+
+    /**
      * Obtiene un caso por su ID.
      *
      * @param id El ID del caso a obtener.
