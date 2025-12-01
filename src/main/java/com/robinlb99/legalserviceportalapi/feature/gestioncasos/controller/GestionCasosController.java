@@ -7,6 +7,7 @@ import jakarta.websocket.server.PathParam;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -29,6 +30,7 @@ public class GestionCasosController {
      * @return El DTO del caso creado.
      */
     @PostMapping("/")
+    @PreAuthorize("hasRole('CLIENTE')")
     public ResponseEntity<CasoResponseDTO> createCaso(
         @Valid @RequestBody CasoRequestDTO request
     ) {
@@ -43,6 +45,7 @@ public class GestionCasosController {
      * @return El DTO del caso.
      */
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('CLIENTE', 'ABOGADO', 'ADMIN')")
     public ResponseEntity<CasoResponseDTO> getCaso(@PathVariable Long id) {
         CasoResponseDTO dto = gestionCasosService.obtenerCasoPorId(id);
         return ResponseEntity.status(HttpStatus.OK).body(dto);
@@ -56,6 +59,7 @@ public class GestionCasosController {
      * @return Una respuesta vacía.
      */
     @PatchMapping("/{id}/estado")
+    @PreAuthorize("hasRole('ABOGADO')")
     public ResponseEntity<Void> updateEstado(
         @PathVariable Long id,
         @Valid @RequestBody CasoEstadoDTO request
@@ -71,6 +75,7 @@ public class GestionCasosController {
      * @return Una respuesta vacía.
      */
     @PatchMapping("/{id}/cerrar")
+    @PreAuthorize("hasRole('ABOGADO')")
     public ResponseEntity<Void> closeCaso(@PathVariable Long id) {
         gestionCasosService.cerrarCaso(id);
         return ResponseEntity.noContent().build();
@@ -84,6 +89,7 @@ public class GestionCasosController {
      * @return Una respuesta vacía.
      */
     @PatchMapping("/{id}/titulo")
+    @PreAuthorize("hasRole('ABOGADO')")
     public ResponseEntity<Void> updateTitulo(
         @PathVariable Long id,
         @Valid @RequestBody CasoTituloDTO request
@@ -100,6 +106,7 @@ public class GestionCasosController {
      * @return Una respuesta vacía.
      */
     @PatchMapping("/{id}/descripcion")
+    @PreAuthorize("hasRole('ABOGADO')")
     public ResponseEntity<Void> updateDescripcion(
         @PathVariable Long id,
         @Valid @RequestBody CasoDescripcioDTO request
@@ -117,6 +124,7 @@ public class GestionCasosController {
      * @return Una página de DTOs de casos.
      */
     @GetMapping("/estado/{estado}")
+    @PreAuthorize("hasAnyRole('CLIENTE','ABOGADO', 'ADMIN')")
     public ResponseEntity<Page<CasoResponseDTO>> getCasoByEstado(
         @PathVariable String estado,
         @PathParam("pag") int numPagina,
@@ -139,6 +147,7 @@ public class GestionCasosController {
      * @return Una página de DTOs de casos.
      */
     @GetMapping("/cliente/{clienteId}")
+    @PreAuthorize("hasAnyRole('CLIENTE','ABOGADO', 'ADMIN')")
     public ResponseEntity<Page<CasoResponseDTO>> getCasosByClienteId(
         @PathVariable Long clienteId,
         @PathParam("pag") int numPagina,
@@ -162,6 +171,7 @@ public class GestionCasosController {
      * @return Una página de DTOs de casos.
      */
     @GetMapping("/abogado/{abogadoId}")
+    @PreAuthorize("hasAnyRole('ABOGADO', 'ADMIN')")
     public ResponseEntity<Page<CasoResponseDTO>> getCasosByAbogadoId(
         @PathVariable Long abogadoId,
         @PathParam("pag") int numPagina,
