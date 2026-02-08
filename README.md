@@ -23,7 +23,7 @@ Esta API backend está diseñada para gestionar los procesos de un portal de ser
 -   **Swagger/OpenAPI:** Para la documentación interactiva de la API.
 
 ## Cómo Empezar
-Para obtener instrucciones detalladas sobre cómo configurar, instalar y ejecutar este proyecto, por favor, consulta el archivo `INSTALL.md`.
+Para obtener instrucciones detalladas sobre cómo configurar, instalar y ejecutar este proyecto, por favor, consulta nuestra [Guía de Instalación](INSTALL.md).
 
 ## Estructura del Proyecto
 El proyecto sigue una estructura modular, organizada por dominios y características, adheriéndose a principios de Clean Architecture para una mayor mantenibilidad y escalabilidad.
