@@ -1,4 +1,16 @@
 services:
+  api:
+    build: .
+    container_name: legal-service-portal-api
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/${POSTGRES_DB}
+      - SPRING_DATASOURCE_USERNAME=${POSTGRES_USER}
+      - SPRING_DATASOURCE_PASSWORD=${POSTGRES_PASSWORD}
+      - APP_PORT=8080
+    depends_on:
+      - db
 
   db:
     image: postgres:18-alpine3.22
