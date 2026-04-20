@@ -9,7 +9,7 @@ Esta API backend está diseñada para gestionar los procesos de un portal de ser
 -   **Gestión de Documentos:** Subida, recuperación y gestión de documentos relevantes para cada caso, clasificados por tipo de documento.
 -   **Gestión de Clientes:** Soporte para la administración de clientes, distinguiendo entre personas naturales y empresas, con sus respectivos detalles.
 -   **Gestión de Abogados:** Administración de la información de los abogados.
--   **Seguridad:** Implementación de Spring Security para autenticación (basada en JWT) y autorización, asegurando el acceso controlado a los recursos de la API.
+-   **Seguridad:** Implementación de Spring Security para autenticación y autorización, asegurando el acceso controlado a los recursos de la API.
 -   **Validación de Datos:** Validación rigurosa de entradas para mantener la integridad de los datos.
 
 ## Tecnologías Utilizadas
